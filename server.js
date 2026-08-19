@@ -1,23 +1,30 @@
 import express from "express";
 import cors from "cors";
 import OpenAI from "openai";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
 app.use(express.json());
+
+// index.html'i yayınla
+app.use(express.static(__dirname));
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
+// Ana sayfa
 app.get("/", (req, res) => {
-  res.json({
-    status: "online",
-    name: "Sithra AI"
-  });
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// AI
 app.post("/api/chat", async (req, res) => {
   try {
     const message = req.body?.message;
@@ -30,16 +37,23 @@ app.post("/api/chat", async (req, res) => {
 
     const response = await client.responses.create({
       model: process.env.OPENAI_MODEL || "gpt-5.6-luna",
+
       instructions: `
 Sen Sithra AI'sın.
 
 Türkçe konuş.
-Cevapların doğal, akıcı ve yardımcı olsun.
-Kullanıcı sana normal şekilde soru sorabilir.
+
 Kendini Sithra AI olarak tanıt.
 
+Cevapların doğal, akıcı, modern ve yardımcı olsun.
+
+Kullanıcı sana normal şekilde soru sorabilir.
+
 Gereksiz yere çok uzun cevap verme.
+
+Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap ver.
 `,
+
       input: message
     });
 
