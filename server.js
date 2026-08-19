@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { GoogleGenAI } from "@google/genai";
+import OpenAI from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -18,8 +18,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Google Gemini API Yapılandırması (AQ... formatlı anahtar desteklenir)
-const ai = new GoogleGenAI({ apiKey: process.env.OPENAI_API_KEY });
+// OpenRouter API (Tüm Llama / Mistral modellerini destekler)
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1"
+});
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -33,20 +36,28 @@ app.post("/api/chat", async (req, res) => {
       return res.status(400).json({ error: "Mesaj gönderilmedi." });
     }
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: message,
-      config: {
-        systemInstruction: "Sen Sithra AI'sın. Türkçe konuş. Kendini Sithra AI olarak tanıt. Cevapların doğal, akıcı, modern ve yardımcı olsun."
-      }
+    const completion = await client.chat.completions.create({
+      model: "meta-llama/llama-3.1-8b-instruct:free",
+      messages: [
+        {
+          role: "system",
+          content: "Sen Sithra AI'sın. Türkçe konuş. Kendini Sithra AI olarak tanıt. Cevapların doğal, akıcı ve yardımcı olsun."
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ]
     });
 
+    const reply = completion.choices[0]?.message?.content;
+
     res.json({
-      reply: response.text || "Cevap üretilemedi."
+      reply: reply || "Cevap üretilemedi."
     });
 
   } catch (error) {
-    console.error("Gemini API Error:", error);
+    console.error("API Error:", error);
     res.status(500).json({
       error: "Sithra AI bağlantısında hata oluştu: " + (error.message || "Bilinmeyen hata")
     });
