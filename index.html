@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SITHRA // PROGRAMLAMA UZMANI</title>
+<title>SITHRA | GTA World Uzmanı</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap');
 
 * {
     margin: 0;
@@ -16,13 +16,15 @@
 }
 
 :root {
-    --green: #00ff41;
-    --green2: #39ff14;
-    --dark: #020603;
-    --panel: rgba(0, 255, 65, 0.035);
-    --border: rgba(0, 255, 65, 0.25);
-    --text: #d8ffe0;
-    --muted: #719078;
+    --orange: #f39c12;
+    --orange2: #ffb52e;
+    --dark: #090909;
+    --dark2: #101010;
+    --panel: #151515;
+    --panel2: #1b1b1b;
+    --border: rgba(243,156,18,.22);
+    --text: #eeeeee;
+    --muted: #999999;
 }
 
 html {
@@ -30,31 +32,56 @@ html {
 }
 
 body {
-    background: #010201;
+    background:
+        radial-gradient(circle at 50% 10%, rgba(243,156,18,.08), transparent 35%),
+        #080808;
     color: var(--text);
-    font-family: 'Fira Code', monospace;
+    font-family: Inter, sans-serif;
     overflow-x: hidden;
 }
 
-/* MATRIX BACKGROUND */
+/* CITY LIGHTS */
 
-#matrix {
+.city-glow {
     position: fixed;
-    inset: 0;
-    z-index: -5;
-    opacity: .12;
+    width: 500px;
+    height: 500px;
+    background: rgba(243,156,18,.04);
+    filter: blur(100px);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -3;
 }
 
-.scanlines {
+.city-glow.one {
+    top: 5%;
+    left: -200px;
+}
+
+.city-glow.two {
+    right: -200px;
+    top: 45%;
+}
+
+/* GRID */
+
+.grid-bg {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 50;
-    background: repeating-linear-gradient(
+    z-index: -4;
+    opacity: .18;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+    background-size: 50px 50px;
+
+    mask-image: linear-gradient(
         to bottom,
-        transparent 0px,
-        transparent 3px,
-        rgba(0,255,65,.025) 4px
+        black,
+        transparent 90%
     );
 }
 
@@ -63,522 +90,824 @@ body {
 nav {
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
-    height: 72px;
+    height: 70px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: 0 7%;
-    background: rgba(0, 3, 1, .88);
-    border-bottom: 1px solid rgba(0,255,65,.15);
+
+    background: rgba(8,8,8,.94);
+    border-bottom: 1px solid rgba(243,156,18,.15);
+
     backdrop-filter: blur(15px);
+
     z-index: 100;
 }
 
 .logo {
-    font-family: Orbitron;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--green);
-    text-shadow: 0 0 15px var(--green);
+    font-family: Oswald;
+    font-size: 22px;
+    letter-spacing: 2px;
 }
 
 .logo span {
-    color: white;
+    color: var(--orange);
+}
+
+.logo small {
+    color: #777;
+    font-family: Inter;
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-left: 8px;
 }
 
 nav ul {
     display: flex;
     list-style: none;
-    gap: 35px;
+    gap: 32px;
 }
 
 nav a {
-    color: #b7c9ba;
+    color: #aaa;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 600;
     transition: .3s;
 }
 
 nav a:hover {
-    color: var(--green);
-    text-shadow: 0 0 12px var(--green);
+    color: var(--orange);
 }
 
 /* HERO */
 
 .hero {
     min-height: 100vh;
-    padding: 140px 7% 80px;
-    display: flex;
+
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
     align-items: center;
-    gap: 70px;
+
+    gap: 80px;
+
+    padding: 140px 8% 90px;
+
+    position: relative;
 }
 
-.hero-left {
-    flex: 1;
-}
+.hero-tag {
+    display: inline-block;
 
-.terminal-small {
-    color: var(--green);
-    font-size: 14px;
-    margin-bottom: 15px;
-}
+    padding: 7px 13px;
 
-.terminal-small::before {
-    content: "> ";
+    border: 1px solid var(--border);
+
+    background: rgba(243,156,18,.06);
+
+    color: var(--orange);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 25px;
 }
 
 .hero h1 {
-    font-family: Orbitron;
-    font-size: clamp(55px, 9vw, 115px);
-    letter-spacing: 8px;
-    color: var(--green);
-    text-shadow:
-        0 0 10px var(--green),
-        0 0 30px rgba(0,255,65,.5);
-    animation: glitch 3s infinite;
+    font-family: Oswald;
+    font-size: clamp(60px, 8vw, 110px);
+    line-height: .9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #f2f2f2;
 }
 
-@keyframes glitch {
-    0%, 90%, 100% {
-        transform: translate(0);
-    }
-    92% {
-        transform: translate(-3px, 2px);
-    }
-    94% {
-        transform: translate(3px, -2px);
-    }
-    96% {
-        transform: translate(-2px, 0);
-    }
+.hero h1 span {
+    color: var(--orange);
+    text-shadow: 0 0 30px rgba(243,156,18,.25);
 }
 
-.subtitle {
-    margin: 10px 0 25px;
-    font-family: Orbitron;
-    font-size: 20px;
-    color: white;
+.hero-sub {
+    margin-top: 25px;
+
+    font-family: Oswald;
+    font-size: 24px;
+
+    color: #ddd;
 }
 
-.subtitle span {
-    color: var(--green);
+.hero-sub span {
+    color: var(--orange);
 }
 
-.description {
+.hero-description {
     max-width: 650px;
-    color: #8ba690;
+
+    margin-top: 20px;
+
+    color: #888;
+
     line-height: 1.9;
+
     font-size: 14px;
 }
 
-/* TERMINAL */
+/* PROFILE CARD */
 
-.terminal {
-    margin-top: 35px;
-    max-width: 600px;
+.profile-card {
+    position: relative;
+
+    max-width: 420px;
+
+    margin-left: auto;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1a1a1a,
+            #0e0e0e
+        );
+
     border: 1px solid var(--border);
-    border-radius: 8px;
-    background: rgba(0,0,0,.65);
-    box-shadow: 0 0 30px rgba(0,255,65,.08);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.7),
+        0 0 40px rgba(243,156,18,.05);
+
     overflow: hidden;
 }
 
-.terminal-bar {
-    padding: 10px 15px;
-    border-bottom: 1px solid var(--border);
-    color: #66816d;
+.profile-top {
+    height: 7px;
+    background:
+        linear-gradient(
+            90deg,
+            #8a5200,
+            var(--orange),
+            #ffe0a0,
+            var(--orange),
+            #8a5200
+        );
+}
+
+.profile-content {
+    padding: 35px;
+}
+
+.avatar {
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #272727,
+            #111
+        );
+
+    border: 2px solid var(--orange);
+
+    box-shadow: 0 0 25px rgba(243,156,18,.15);
+
+    font-family: Oswald;
+    font-size: 32px;
+
+    color: var(--orange);
+
+    margin-bottom: 22px;
+}
+
+.profile-content h2 {
+    font-family: Oswald;
+    font-size: 31px;
+}
+
+.profile-role {
+    margin-top: 5px;
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.profile-line {
+    height: 1px;
+    background: #292929;
+    margin: 25px 0;
+}
+
+.profile-info {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #222;
+
     font-size: 11px;
 }
 
-.dots {
-    color: var(--green);
-    letter-spacing: 5px;
+.profile-info span:first-child {
+    color: #777;
 }
 
-.terminal-body {
-    padding: 20px;
-    line-height: 1.8;
-    font-size: 13px;
+.profile-info span:last-child {
+    color: #ddd;
 }
 
-.prompt {
-    color: var(--green);
-}
-
-.terminal-output {
-    color: #a3b9a7;
+.status {
+    color: #57d66b !important;
 }
 
 /* BUTTONS */
 
 .buttons {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     margin-top: 30px;
 }
 
 .btn {
-    padding: 14px 25px;
-    border: 1px solid var(--green);
-    color: var(--green);
+    display: inline-block;
+
+    padding: 14px 24px;
+
     text-decoration: none;
-    font-size: 12px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    border: 1px solid var(--orange);
+
+    color: var(--orange);
+
     transition: .3s;
-    background: rgba(0,255,65,.03);
+
+    background: rgba(243,156,18,.04);
 }
 
 .btn:hover {
-    background: var(--green);
-    color: #000;
-    box-shadow: 0 0 30px rgba(0,255,65,.5);
-}
+    background: var(--orange);
+    color: #090909;
 
-/* AVATAR */
-
-.hero-right {
-    flex: .8;
-    display: flex;
-    justify-content: center;
-}
-
-.avatar {
-    width: min(440px, 80vw);
-    height: 440px;
-    border-radius: 50%;
-    border: 1px solid var(--green);
     box-shadow:
-        0 0 30px rgba(0,255,65,.2),
-        inset 0 0 50px rgba(0,255,65,.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    animation: float 5s ease-in-out infinite;
+        0 0 25px rgba(243,156,18,.25);
+
+    transform: translateY(-3px);
 }
 
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+.btn.secondary {
+    border-color: #333;
+    color: #aaa;
 }
 
-.avatar::before,
-.avatar::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(0,255,65,.3);
-}
-
-.avatar::before {
-    inset: -25px;
-    animation: rotate 15s linear infinite;
-}
-
-.avatar::after {
-    inset: 25px;
-    animation: rotate 10s linear reverse infinite;
-}
-
-@keyframes rotate {
-    to { transform: rotate(360deg); }
-}
-
-.avatar-content {
-    text-align: center;
-    z-index: 2;
-}
-
-.code-symbol {
-    font-size: 85px;
-    color: var(--green);
-    text-shadow: 0 0 35px var(--green);
-}
-
-.avatar-content h3 {
-    font-family: Orbitron;
+.btn.secondary:hover {
+    background: #222;
     color: white;
-    margin-top: 15px;
-}
-
-.online {
-    margin-top: 15px;
-    font-size: 11px;
-    color: var(--green);
-}
-
-.online::before {
-    content: "●";
-    margin-right: 8px;
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    50% { opacity: .2; }
 }
 
 /* SECTIONS */
 
 section {
-    padding: 100px 7%;
+    padding: 100px 8%;
 }
 
-.section-title {
-    font-family: Orbitron;
-    color: var(--green);
-    font-size: 12px;
+.section-label {
+    color: var(--orange);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
     margin-bottom: 10px;
 }
 
-.section-title::before {
-    content: "// ";
+.section-label::before {
+    content: "— ";
+    color: #555;
 }
 
-h2 {
-    font-family: Orbitron;
-    font-size: 35px;
-    margin-bottom: 50px;
-    color: white;
+.section-title {
+    font-family: Oswald;
+
+    font-size: 42px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 45px;
 }
 
-/* SKILLS */
+/* EXPERTISE */
 
-.skills {
+.expertise {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
     gap: 18px;
 }
 
-.skill {
-    padding: 30px 15px;
-    text-align: center;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    transition: .3s;
+.expert-card {
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #101010
+        );
+
+    border: 1px solid #292929;
+
+    padding: 30px;
+
+    min-height: 220px;
+
+    transition: .35s;
+
     position: relative;
     overflow: hidden;
 }
 
-.skill:hover {
+.expert-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--orange);
+
+    transition: .35s;
+}
+
+.expert-card:hover {
     transform: translateY(-8px);
-    border-color: var(--green);
-    box-shadow: 0 0 25px rgba(0,255,65,.15);
+
+    border-color: var(--border);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.4);
 }
 
-.skill-icon {
-    font-size: 38px;
-    color: var(--green);
-    margin-bottom: 15px;
+.expert-card:hover::before {
+    width: 100%;
 }
 
-.skill h3 {
-    font-size: 15px;
-    color: white;
+.expert-icon {
+    font-size: 30px;
+    color: var(--orange);
+
+    margin-bottom: 22px;
 }
 
-.skill p {
-    color: var(--green);
-    font-size: 10px;
-    margin-top: 8px;
+.expert-card h3 {
+    font-family: Oswald;
+    font-size: 22px;
+
+    margin-bottom: 12px;
 }
 
-/* PROGRESS */
-
-.progress {
-    height: 3px;
-    background: #102015;
-    margin-top: 18px;
+.expert-card p {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.8;
 }
 
-.progress span {
+/* KNOWLEDGE */
+
+.knowledge {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.knowledge-card {
+    padding: 25px;
+
+    background: #121212;
+
+    border: 1px solid #292929;
+
+    transition: .3s;
+}
+
+.knowledge-card:hover {
+    border-color: var(--border);
+}
+
+.knowledge-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.knowledge-head h3 {
+    font-family: Oswald;
+    font-size: 19px;
+}
+
+.level {
+    color: var(--orange);
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.bar {
+    height: 4px;
+
+    background: #252525;
+
+    overflow: hidden;
+}
+
+.bar span {
     display: block;
+
     height: 100%;
-    background: var(--green);
-    box-shadow: 0 0 10px var(--green);
+
+    background:
+        linear-gradient(
+            90deg,
+            #9b5e00,
+            var(--orange)
+        );
+
+    box-shadow:
+        0 0 10px rgba(243,156,18,.3);
+}
+
+/* RP PANEL */
+
+.rp-section {
+    background:
+        linear-gradient(
+            180deg,
+            #090909,
+            #0d0d0d
+        );
+}
+
+.rp-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 25px;
+}
+
+.rp-box {
+    border: 1px solid #292929;
+
+    background: #111;
+
+    padding: 35px;
+}
+
+.rp-box h3 {
+    font-family: Oswald;
+
+    font-size: 25px;
+
+    margin-bottom: 20px;
+}
+
+.rp-box h3 span {
+    color: var(--orange);
+}
+
+.rp-box p {
+    color: #808080;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+}
+
+.rp-list {
+    list-style: none;
+
+    margin-top: 20px;
+}
+
+.rp-list li {
+    padding: 12px 0;
+
+    border-bottom: 1px solid #222;
+
+    color: #aaa;
+
+    font-size: 12px;
+}
+
+.rp-list li::before {
+    content: "✓";
+
+    color: var(--orange);
+
+    margin-right: 12px;
 }
 
 /* STATS */
 
 .stats {
-    margin-top: 70px;
-    border: 1px solid var(--border);
-    padding: 35px;
+    margin-top: 60px;
+
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    background: rgba(0,255,65,.02);
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    border: 1px solid #292929;
+
+    background: #111;
 }
 
 .stat {
     text-align: center;
-    border-right: 1px solid rgba(0,255,65,.15);
+
+    padding: 35px 20px;
+
+    border-right: 1px solid #292929;
 }
 
 .stat:last-child {
-    border: none;
+    border-right: none;
 }
 
 .stat-number {
-    font-family: Orbitron;
-    font-size: 28px;
-    color: var(--green);
-    text-shadow: 0 0 15px rgba(0,255,65,.5);
+    font-family: Oswald;
+
+    font-size: 38px;
+
+    color: var(--orange);
 }
 
 .stat p {
-    font-size: 10px;
-    color: #6f8874;
     margin-top: 8px;
+
+    color: #666;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
 }
 
 /* ABOUT */
 
-.about-grid {
+.about {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 30px;
 }
 
 .about-box {
-    border: 1px solid var(--border);
+    background: #111;
+
+    border: 1px solid #292929;
+
     padding: 35px;
-    background: var(--panel);
+}
+
+.about-box h3 {
+    font-family: Oswald;
+
+    font-size: 25px;
+
+    margin-bottom: 20px;
 }
 
 .about-box p {
-    color: #8da792;
-    line-height: 2;
+    color: #888;
+
     font-size: 13px;
+
+    line-height: 2;
 }
 
-.code-box {
-    font-size: 12px;
-    line-height: 1.8;
-    color: #91aa96;
+.highlight {
+    color: var(--orange);
 }
 
-.code-green {
-    color: var(--green);
+/* CONTACT */
+
+.contact {
+    text-align: center;
+
+    max-width: 850px;
+
+    margin: auto;
 }
 
-.code-blue {
-    color: #65b5ff;
+.contact p {
+    color: #777;
+
+    font-size: 14px;
+
+    line-height: 1.9;
 }
 
-.code-yellow {
-    color: #dfff70;
+.contact .buttons {
+    justify-content: center;
 }
 
 /* FOOTER */
 
 footer {
-    padding: 60px 7%;
+    padding: 50px 8%;
+
+    border-top: 1px solid #222;
+
     text-align: center;
-    border-top: 1px solid rgba(0,255,65,.15);
-    color: #49604e;
-    font-size: 11px;
+
+    color: #555;
+
+    font-size: 10px;
 }
 
 footer span {
-    color: var(--green);
+    color: var(--orange);
 }
 
-/* CURSOR */
+/* ANIMATIONS */
 
-.cursor {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--green);
-    box-shadow: 0 0 15px var(--green);
-    pointer-events: none;
-    z-index: 999;
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes cityPulse {
+    0%,100% {
+        opacity: .5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.hero-tag {
+    animation: cityPulse 3s infinite;
 }
 
 /* MOBILE */
 
-@media(max-width: 900px) {
+@media(max-width: 1000px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card {
+        margin: auto;
+    }
+
+    .expertise {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .knowledge {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+}
+
+@media(max-width: 700px) {
 
     nav ul {
         display: none;
     }
 
     .hero {
-        flex-direction: column;
-        text-align: center;
-        padding-top: 130px;
-    }
-
-    .description,
-    .terminal {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .buttons {
-        justify-content: center;
-    }
-
-    .skills {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-
-    .stat {
-        border-right: none;
-    }
-
-    .about-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .avatar {
-        width: 330px;
-        height: 330px;
-    }
-}
-
-@media(max-width: 500px) {
-
-    .skills {
-        grid-template-columns: 1fr;
-    }
-
-    .hero h1 {
-        font-size: 55px;
+        padding-left: 6%;
+        padding-right: 6%;
     }
 
     section {
-        padding: 70px 5%;
+        padding: 75px 6%;
+    }
+
+    .expertise,
+    .knowledge,
+    .rp-grid,
+    .about {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stat:nth-child(2) {
+        border-right: none;
+    }
+
+    .stat {
+        border-bottom: 1px solid #292929;
+    }
+
+    .hero h1 {
+        font-size: 65px;
     }
 }
+
+@media(max-width: 450px) {
+
+    .hero h1 {
+        font-size: 50px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        text-align: center;
+    }
+
+    .profile-content {
+        padding: 25px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
-<div class="scanlines"></div>
+<div class="city-glow one"></div>
+<div class="city-glow two"></div>
+<div class="grid-bg"></div>
 
-<!-- NAVBAR -->
+
+<!-- NAV -->
 
 <nav>
 
     <div class="logo">
-        &lt;/&gt; <span>SITHRA</span>
+        SITHRA
+        <span>// GTAW</span>
+        <small>ROLEPLAY EXPERT</small>
     </div>
 
     <ul>
-        <li><a href="#home">ANA SAYFA</a></li>
-        <li><a href="#skills">YETENEKLER</a></li>
-        <li><a href="#about">HAKKIMDA</a></li>
-        <li><a href="#contact">İLETİŞİM</a></li>
+
+        <li>
+            <a href="#home">ANA SAYFA</a>
+        </li>
+
+        <li>
+            <a href="#expertise">UZMANLIK</a>
+        </li>
+
+        <li>
+            <a href="#rp">ROLEPLAY</a>
+        </li>
+
+        <li>
+            <a href="#about">HAKKIMDA</a>
+        </li>
+
+        <li>
+            <a href="#contact">İLETİŞİM</a>
+        </li>
+
     </ul>
 
 </nav>
@@ -588,66 +917,47 @@ footer span {
 
 <section class="hero" id="home">
 
-    <div class="hero-left">
+    <div>
 
-        <div class="terminal-small">
-            system.boot()
+        <div class="hero-tag">
+            LOS SANTOS • SAN ANDREAS • GTA WORLD
         </div>
 
-        <h1>SITHRA</h1>
+        <h1>
+            SITHRA<br>
+            <span>GTA WORLD</span>
+        </h1>
 
-        <div class="subtitle">
-            &lt;/&gt; <span>PROGRAMLAMA UZMANI</span>
+        <div class="hero-sub">
+            <span>ROLEPLAY</span> &amp; CONTINUITY UZMANI
         </div>
 
-        <p class="description">
-            Kod yazmak benim için sadece bir iş değil,
-            bir tutkudur. Modern teknolojiler ile
-            projeler geliştiriyor, sistemler tasarlıyor
-            ve sürekli yeni şeyler öğreniyorum.
+        <p class="hero-description">
+
+            GTA World evreni, Roleplay kuralları,
+            Continuity, karakter gelişimi ve
+            kaliteli RP anlayışı üzerine uzmanlaşmış
+            bir oyuncu profili.
+
+            <br><br>
+
+            <span style="color:#aaa;">
+                Amacım sadece oynamak değil;
+                bulunduğum evrene uygun,
+                tutarlı ve kaliteli karakterler
+                oluşturmak.
+            </span>
+
         </p>
-
-        <div class="terminal">
-
-            <div class="terminal-bar">
-                <span class="dots">● ● ●</span>
-                &nbsp; sithra@dev: ~
-            </div>
-
-            <div class="terminal-body">
-
-                <div>
-                    <span class="prompt">sithra@dev:~$</span>
-                    whoami
-                </div>
-
-                <div class="terminal-output">
-                    &gt; Programmer<br>
-                    &gt; Problem Solver<br>
-                    &gt; Software Developer<br>
-                    &gt; Code Enthusiast<br>
-                    &gt; System Architect
-                </div>
-
-                <br>
-
-                <div>
-                    <span class="prompt">sithra@dev:~$</span>
-                    <span id="typing"></span><span>_</span>
-                </div>
-
-            </div>
-
-        </div>
 
         <div class="buttons">
 
-            <a href="#skills" class="btn">
-                &gt; YETENEKLERİM
+            <a href="#expertise" class="btn">
+                UZMANLIK ALANLARIM
             </a>
 
-            <a href="#contact" class="btn">
-                &gt; İLETİŞİME GEÇ
+            <a href="#rp" class="btn secondary">
+                RP BİLGİLERİ
             </a>
 
         </div>
@@ -655,22 +965,51 @@ footer span {
     </div>
 
 
-    <div class="hero-right">
+    <!-- PROFILE -->
 
-        <div class="avatar">
+    <div class="profile-card">
 
-            <div class="avatar-content">
+        <div class="profile-top"></div>
 
-                <div class="code-symbol">
-                    &lt;/&gt;
-                </div>
+        <div class="profile-content">
 
-                <h3>CODE MODE</h3>
+            <div class="avatar">
+                S
+            </div>
 
-                <div class="online">
-                    SYSTEM ONLINE
-                </div>
+            <h2>SITHRA</h2>
 
+            <div class="profile-role">
+                GTA WORLD UZMANI
+            </div>
+
+            <div class="profile-line"></div>
+
+            <div class="profile-info">
+                <span>Uzmanlık</span>
+                <span>Roleplay</span>
+            </div>
+
+            <div class="profile-info">
+                <span>Continuity</span>
+                <span>Uzman</span>
+            </div>
+
+            <div class="profile-info">
+                <span>Karakter Gelişimi</span>
+                <span>Uzman</span>
+            </div>
+
+            <div class="profile-info">
+                <span>RP Kuralları</span>
+                <span>Uzman</span>
+            </div>
+
+            <div class="profile-info">
+                <span>Durum</span>
+                <span class="status">
+                    ● ONLINE
+                </span>
             </div>
 
         </div>
@@ -680,116 +1019,375 @@ footer span {
 </section>
 
 
-<!-- SKILLS -->
+<!-- EXPERTISE -->
 
-<section id="skills">
+<section id="expertise">
+
+    <div class="section-label">
+        SPECIALIZATION
+    </div>
 
     <div class="section-title">
-        YETENEKLERİM
+        Uzmanlık Alanlarım
     </div>
 
-    <h2>BİLDİĞİM TEKNOLOJİLER</h2>
 
-    <div class="skills">
+    <div class="expertise">
 
-        <div class="skill">
-            <div class="skill-icon">HTML</div>
-            <h3>HTML</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:95%"></span></div>
+
+        <div class="expert-card reveal">
+
+            <div class="expert-icon">
+                ⚖
+            </div>
+
+            <h3>RP KURALLARI</h3>
+
+            <p>
+                Roleplay kurallarını,
+                oyuncu davranışlarını ve
+                kaliteli RP standartlarını
+                inceleme ve uygulama.
+            </p>
+
         </div>
 
-        <div class="skill">
-            <div class="skill-icon">CSS</div>
-            <h3>CSS</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:93%"></span></div>
+
+        <div class="expert-card reveal">
+
+            <div class="expert-icon">
+                ◈
+            </div>
+
+            <h3>CONTINUITY</h3>
+
+            <p>
+                GTA World evreninin sürekliliğini,
+                dünya bilgisini ve karakter
+                geçmişlerinin tutarlılığını analiz etme.
+            </p>
+
         </div>
 
-        <div class="skill">
-            <div class="skill-icon">JS</div>
-            <h3>JavaScript</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:91%"></span></div>
+
+        <div class="expert-card reveal">
+
+            <div class="expert-icon">
+                ♟
+            </div>
+
+            <h3>KARAKTER RP</h3>
+
+            <p>
+                Gerçekçi karakter geçmişleri,
+                kişilik özellikleri, motivasyonlar
+                ve gelişim süreçleri oluşturma.
+            </p>
+
         </div>
 
-        <div class="skill">
-            <div class="skill-icon">PY</div>
-            <h3>Python</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:94%"></span></div>
-        </div>
 
-        <div class="skill">
-            <div class="skill-icon">C++</div>
-            <h3>C++</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:88%"></span></div>
-        </div>
+        <div class="expert-card reveal">
 
-        <div class="skill">
-            <div class="skill-icon">C#</div>
-            <h3>C#</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:87%"></span></div>
-        </div>
+            <div class="expert-icon">
+                ★
+            </div>
 
-        <div class="skill">
-            <div class="skill-icon">JAVA</div>
-            <h3>Java</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:86%"></span></div>
-        </div>
+            <h3>RP KALİTESİ</h3>
 
-        <div class="skill">
-            <div class="skill-icon">PHP</div>
-            <h3>PHP</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:90%"></span></div>
-        </div>
+            <p>
+                Sahne kalitesi, karakter davranışları,
+                IC/OOC ayrımı ve gerçekçi
+                Roleplay yaklaşımı.
+            </p>
 
-        <div class="skill">
-            <div class="skill-icon">SQL</div>
-            <h3>SQL</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:92%"></span></div>
-        </div>
-
-        <div class="skill">
-            <div class="skill-icon">TS</div>
-            <h3>TypeScript</h3>
-            <p>UZMAN</p>
-            <div class="progress"><span style="width:89%"></span></div>
         </div>
 
     </div>
 
+</section>
+
+
+<!-- RP -->
+
+<section class="rp-section" id="rp">
+
+    <div class="section-label">
+        ROLEPLAY DATABASE
+    </div>
+
+    <div class="section-title">
+        GTA WORLD BİLGİLERİ
+    </div>
+
+
+    <div class="rp-grid">
+
+
+        <div class="rp-box reveal">
+
+            <h3>
+                SAN ANDREAS
+                <span>// EVREN</span>
+            </h3>
+
+            <p>
+                GTA World içerisinde kullanılan
+                evren, Grand Theft Auto dünyasının
+                kendine özgü Roleplay yapısına
+                göre şekillendirilmiştir.
+            </p>
+
+            <ul class="rp-list">
+
+                <li>
+                    Los Santos
+                </li>
+
+                <li>
+                    San Fierro
+                </li>
+
+                <li>
+                    San Andreas evreni
+                </li>
+
+                <li>
+                    Karakter sürekliliği
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="rp-box reveal">
+
+            <h3>
+                ROLEPLAY
+                <span>// TEMELLER</span>
+            </h3>
+
+            <p>
+                Kaliteli Roleplay; karakterin
+                bulunduğu dünyaya uygun hareket
+                etmesi, olayları gerçekçi şekilde
+                değerlendirmesi ve sonuçlarını
+                kabul etmesi üzerine kuruludur.
+            </p>
+
+            <ul class="rp-list">
+
+                <li>
+                    IC / OOC ayrımı
+                </li>
+
+                <li>
+                    Karakter bütünlüğü
+                </li>
+
+                <li>
+                    Gerçekçi tepki ve davranış
+                </li>
+
+                <li>
+                    Süreklilik
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
 
     <div class="stats">
 
         <div class="stat">
-            <div class="stat-number">10+</div>
-            <p>TEKNOLOJİ</p>
+
+            <div class="stat-number">
+                RP
+            </div>
+
+            <p>
+                ROLEPLAY
+            </p>
+
         </div>
 
-        <div class="stat">
-            <div class="stat-number">100+</div>
-            <p>PROJE</p>
-        </div>
 
         <div class="stat">
-            <div class="stat-number">7/24</div>
-            <p>KOD YAZIYOR</p>
+
+            <div class="stat-number">
+                IC
+            </div>
+
+            <p>
+                IN CHARACTER
+            </p>
+
         </div>
 
-        <div class="stat">
-            <div class="stat-number">∞</div>
-            <p>ÖĞRENME</p>
-        </div>
 
         <div class="stat">
-            <div class="stat-number">1</div>
-            <p>PROGRAMCI</p>
+
+            <div class="stat-number">
+                OOC
+            </div>
+
+            <p>
+                OUT OF CHARACTER
+            </p>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-number">
+                RP+
+            </div>
+
+            <p>
+                QUALITY ROLEPLAY
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- KNOWLEDGE -->
+
+<section>
+
+    <div class="section-label">
+        KNOWLEDGE
+    </div>
+
+    <div class="section-title">
+        Bilgi Seviyelerim
+    </div>
+
+
+    <div class="knowledge">
+
+
+        <div class="knowledge-card">
+
+            <div class="knowledge-head">
+
+                <h3>RP Kuralları</h3>
+
+                <span class="level">
+                    EXPERT
+                </span>
+
+            </div>
+
+            <div class="bar">
+                <span style="width:96%"></span>
+            </div>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+            <div class="knowledge-head">
+
+                <h3>Continuity</h3>
+
+                <span class="level">
+                    EXPERT
+                </span>
+
+            </div>
+
+            <div class="bar">
+                <span style="width:94%"></span>
+            </div>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+            <div class="knowledge-head">
+
+                <h3>Character Development</h3>
+
+                <span class="level">
+                    EXPERT
+                </span>
+
+            </div>
+
+            <div class="bar">
+                <span style="width:93%"></span>
+            </div>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+            <div class="knowledge-head">
+
+                <h3>IC Roleplay</h3>
+
+                <span class="level">
+                    EXPERT
+                </span>
+
+            </div>
+
+            <div class="bar">
+                <span style="width:97%"></span>
+            </div>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+            <div class="knowledge-head">
+
+                <h3>OOC Bilgi</h3>
+
+                <span class="level">
+                    ADVANCED
+                </span>
+
+            </div>
+
+            <div class="bar">
+                <span style="width:89%"></span>
+            </div>
+
+        </div>
+
+
+        <div class="knowledge-card">
+
+            <div class="knowledge-head">
+
+                <h3>Storytelling</h3>
+
+                <span class="level">
+                    ADVANCED
+                </span>
+
+            </div>
+
+            <div class="bar">
+                <span style="width:91%"></span>
+            </div>
+
         </div>
 
     </div>
@@ -801,79 +1399,81 @@ footer span {
 
 <section id="about">
 
-    <div class="section-title">
-        HAKKIMDA
+    <div class="section-label">
+        PLAYER PROFILE
     </div>
 
-    <h2>ABOUT.PY</h2>
+    <div class="section-title">
+        Hakkımda
+    </div>
 
-    <div class="about-grid">
 
-        <div class="about-box">
+    <div class="about">
+
+
+        <div class="about-box reveal">
+
+            <h3>
+                SITHRA
+            </h3>
 
             <p>
-                Ben <span style="color:#00ff41">Sithra</span>.
-                Yazılım geliştirme, problem çözme ve yeni
-                teknolojiler öğrenme konusunda tutkulu
-                bir programlama uzmanıyım.
-            </p>
 
-            <br>
+                GTA World içerisinde Roleplay,
+                karakter geliştirme ve evren
+                sürekliliği konularına odaklanan
+                bir oyuncuyum.
 
-            <p>
-                Farklı programlama dilleri ve teknolojiler
-                kullanarak modern, hızlı ve güvenilir
-                sistemler geliştiriyorum.
-            </p>
+                <br><br>
 
-            <br>
+                Benim için iyi RP yalnızca
+                karakterin konuşmasından ibaret
+                değildir.
 
-            <p style="color:#00ff41">
-                Kodla. Öğren. Geliştir. Tekrarla.
+                Karakterin geçmişi,
+                bulunduğu ortam,
+                aldığı kararlar ve bu kararların
+                sonuçları bir bütün oluşturmalıdır.
+
+                <br><br>
+
+                <span class="highlight">
+                    Gerçekçi karakter.
+                    Tutarlı hikâye.
+                    Kaliteli Roleplay.
+                </span>
+
             </p>
 
         </div>
 
 
-        <div class="about-box code-box">
+        <div class="about-box reveal">
 
-            <span class="code-blue">class</span>
-            <span class="code-green"> Developer</span>:
+            <h3>
+                RP FELSEFEM
+            </h3>
 
-            <br><br>
+            <p>
 
-            &nbsp;&nbsp;<span class="code-blue">def</span>
-            <span class="code-green"> __init__</span>(self):
+                <span class="highlight">
+                    IC > OOC
+                </span>
 
-            <br>
+                <br><br>
 
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            self.name =
-            <span class="code-yellow">"Sithra"</span>
+                Karakterin bildiği ile oyuncunun
+                bildiği bilgiyi birbirinden ayırmak,
+                Roleplay'in temel noktalarından biridir.
 
-            <br>
+                <br><br>
 
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            self.role =
-            <span class="code-yellow">
-            "Programlama Uzmanı"
-            </span>
+                Karakterlerimin kararlarını,
+                oyuncu olarak benim bildiklerime göre
+                değil; karakterimin sahip olduğu
+                bilgiye göre şekillendiririm.
 
-            <br>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            self.languages =
-            <span class="code-yellow">
-            ["HTML", "CSS", "JS", "Python", "C++", "C#", "Java", "PHP", "SQL", "TS"]
-            </span>
-
-            <br>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            self.status =
-            <span class="code-yellow">
-            "Coding..."
-            </span>
+            </p>
 
         </div>
 
@@ -886,220 +1486,151 @@ footer span {
 
 <section id="contact">
 
-    <div class="section-title">
-        İLETİŞİM
-    </div>
+    <div class="contact">
 
-    <h2>LET'S BUILD SOMETHING</h2>
+        <div class="section-label">
+            LOS SANTOS CONNECTION
+        </div>
 
-    <div class="about-box" style="text-align:center">
+        <div class="section-title">
+            İletişime Geç
+        </div>
 
         <p>
-            Bir proje fikrin mi var?
-            Birlikte bir şeyler geliştirebiliriz.
+
+            GTA World, Roleplay veya karakter
+            geliştirme hakkında konuşmak istersen
+            benimle iletişime geçebilirsin.
+
         </p>
 
-        <br>
+        <div class="buttons">
 
-        <a
-            href="mailto:mail@example.com"
-            class="btn"
-        >
-            &gt; E-MAIL GÖNDER
-        </a>
+            <a
+                href="https://discord.com/"
+                target="_blank"
+                class="btn"
+            >
+                DISCORD
+            </a>
+
+            <a
+                href="#home"
+                class="btn secondary"
+            >
+                ANA SAYFA
+            </a>
+
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- FOOTER -->
+
 <footer>
 
     <p>
-        <span>&lt;/&gt;</span>
-        SITHRA
-        // PROGRAMLAMA UZMANI
+
+        <span>SITHRA</span>
+
+        // GTA WORLD ROLEPLAY SPECIALIST
+
     </p>
 
     <br>
 
     <p>
-        SYSTEM STATUS:
-        <span>ONLINE</span>
+
+        FAN-MADE PERSONAL PROFILE
+
+        •
+
+        NOT AFFILIATED WITH GTA WORLD
+
     </p>
 
 </footer>
 
 
-<!-- JAVASCRIPT -->
-
 <script>
 
-/* MATRIX EFFECT */
+/* SCROLL REVEAL */
 
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
+const revealElements =
+document.querySelectorAll(".reveal");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const observer =
+new IntersectionObserver(
+(entries) => {
 
-const letters =
-"01ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>/\\\\$#@%";
+    entries.forEach(entry => {
 
-const fontSize = 14;
-const columns = Math.floor(canvas.width / fontSize);
+        if(entry.isIntersecting) {
 
-const drops = [];
+            entry.target.classList.add("active");
 
-for(let i = 0; i < columns; i++) {
-    drops[i] = Math.random() * -100;
-}
-
-function drawMatrix() {
-
-    ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#00ff41";
-    ctx.font = fontSize + "px monospace";
-
-    for(let i = 0; i < drops.length; i++) {
-
-        const text =
-            letters[Math.floor(Math.random() * letters.length)];
-
-        ctx.fillText(
-            text,
-            i * fontSize,
-            drops[i] * fontSize
-        );
-
-        if(
-            drops[i] * fontSize > canvas.height
-            &&
-            Math.random() > 0.975
-        ) {
-            drops[i] = 0;
         }
 
-        drops[i]++;
-    }
-}
+    });
 
-setInterval(drawMatrix, 35);
-
-window.addEventListener("resize", () => {
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
+},
+{
+    threshold: .12
 });
 
-
-/* TERMINAL TYPING */
-
-const texts = [
-    "init developer_mode...",
-    "loading skills...",
-    "compiling creativity...",
-    "system.ready()",
-    "welcome to sithra.dev"
-];
-
-let textIndex = 0;
-let charIndex = 0;
-let deleting = false;
-
-const typing = document.getElementById("typing");
-
-function typeEffect() {
-
-    const current = texts[textIndex];
-
-    if(!deleting) {
-
-        typing.textContent =
-            current.substring(0, charIndex++);
-
-        if(charIndex > current.length) {
-
-            deleting = true;
-
-            setTimeout(typeEffect, 1500);
-
-            return;
-        }
-
-    } else {
-
-        typing.textContent =
-            current.substring(0, charIndex--);
-
-        if(charIndex < 0) {
-
-            deleting = false;
-            charIndex = 0;
-
-            textIndex++;
-
-            if(textIndex >= texts.length) {
-                textIndex = 0;
-            }
-
-        }
-
-    }
-
-    setTimeout(
-        typeEffect,
-        deleting ? 35 : 70
-    );
-}
-
-typeEffect();
+revealElements.forEach(
+element => observer.observe(element)
+);
 
 
-/* CUSTOM CURSOR */
+/* RANDOM CITY LIGHT EFFECT */
 
-const cursor = document.createElement("div");
-
-cursor.className = "cursor";
-
-document.body.appendChild(cursor);
-
-document.addEventListener("mousemove", e => {
-
-    cursor.style.left =
-        e.clientX + "px";
-
-    cursor.style.top =
-        e.clientY + "px";
-
-});
-
-
-/* RANDOM GLITCH */
+const glows =
+document.querySelectorAll(".city-glow");
 
 setInterval(() => {
 
-    const title =
-        document.querySelector("h1");
+    glows.forEach(glow => {
 
-    if(Math.random() > .7) {
+        const x =
+            Math.random() * 30 - 15;
 
-        title.style.textShadow =
-            "5px 0 #ff0040, -5px 0 #00ffff";
+        const y =
+            Math.random() * 30 - 15;
 
-        setTimeout(() => {
+        glow.style.transform =
+            `translate(${x}px, ${y}px)`;
 
-            title.style.textShadow =
-                "0 0 10px #00ff41, 0 0 30px rgba(0,255,65,.5)";
+    });
 
-        }, 100);
+}, 2500);
 
-    }
 
-}, 2000);
+/* MOUSE PARALLAX */
+
+document.addEventListener(
+"mousemove",
+event => {
+
+    const x =
+        (event.clientX /
+        window.innerWidth - .5) * 10;
+
+    const y =
+        (event.clientY /
+        window.innerHeight - .5) * 10;
+
+    document.querySelector(".profile-card")
+        ?.style.setProperty(
+            "transform",
+            `translate(${x}px, ${y}px)`
+        );
+
+});
+
 
 </script>
 
