@@ -9,22 +9,25 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
-// Statik dosyaları sun
+app.use(express.json());
 app.use(express.static(__dirname));
 
+// Groq API OpenAI SDK'sı ile tam uyumludur
 const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://api.groq.com/openai/v1"
 });
 
-// Ana sayfa
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// AI Chat Endpoint
 app.post("/api/chat", async (req, res) => {
   try {
     const message = req.body?.message;
@@ -36,23 +39,16 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const completion = await client.chat.completions.create({
-      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+      model: "llama-3.3-70b-versatile",
       messages: [
         {
           role: "system",
           content: `
 Sen Sithra AI'sın.
-
 Türkçe konuş.
-
 Kendini Sithra AI olarak tanıt.
-
 Cevapların doğal, akıcı, modern ve yardımcı olsun.
-
-Kullanıcı sana normal şekilde soru sorabilir.
-
 Gereksiz yere çok uzun cevap verme.
-
 Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap ver.
 `
         },
@@ -70,7 +66,7 @@ Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap v
     });
 
   } catch (error) {
-    console.error("OpenAI Error:", error);
+    console.error("Groq API Error:", error);
 
     res.status(500).json({
       error: "Sithra AI bağlantısında hata oluştu: " + (error.message || "Bilinmeyen hata")
@@ -78,7 +74,6 @@ Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap v
   }
 });
 
-// Lokal çalıştırma desteği
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
@@ -86,5 +81,4 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-// Vercel Serverless Deployment için zorunlu export
 export default app;
