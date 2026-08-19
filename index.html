@@ -2,12 +2,11 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Mete Karahanlı | Mete1337'nin Uzmanı</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SHITRA // CLASSIFIED</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Share+Tech+Mono&display=swap');
 
 *{
     margin:0;
@@ -15,82 +14,221 @@
     box-sizing:border-box;
 }
 
-:root{
-    --red:#ff1744;
-    --red2:#ff4569;
-    --dark:#050507;
-    --dark2:#09090d;
-    --card:#0d0d12;
-    --card2:#111117;
-    --border:rgba(255,23,68,.20);
-    --text:#f2f2f5;
-    --muted:#85858f;
-}
-
 html{
     scroll-behavior:smooth;
 }
 
 body{
-    background:#050507;
-    color:var(--text);
-    font-family:Inter,sans-serif;
+    background:#000;
+    color:#aaa;
+    font-family:'Share Tech Mono',monospace;
     overflow-x:hidden;
+    cursor:crosshair;
 }
 
-/* BACKGROUND */
+/* =========================
+   ANA ATMOSFER
+========================= */
 
-body::before{
+body:before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
+    z-index:-20;
     background:
-        radial-gradient(circle at 15% 20%,rgba(255,23,68,.10),transparent 25%),
-        radial-gradient(circle at 85% 70%,rgba(255,23,68,.07),transparent 30%),
-        #050507;
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(120,0,0,.15),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(80,0,0,.12),
+            transparent 30%
+        ),
+        #000;
 }
 
-.grid{
+/* Film noise */
+
+.noise{
+    position:fixed;
+    inset:-50%;
+    z-index:50;
+    pointer-events:none;
+    opacity:.06;
+
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            #fff 0,
+            transparent 1px,
+            transparent 3px
+        );
+
+    background-size:5px 5px;
+
+    animation:noise .15s infinite;
+}
+
+@keyframes noise{
+    0%{transform:translate(0,0)}
+    25%{transform:translate(2%,1%)}
+    50%{transform:translate(-1%,2%)}
+    75%{transform:translate(1%,-2%)}
+    100%{transform:translate(-2%,1%)}
+}
+
+/* Scanlines */
+
+.scanlines{
     position:fixed;
     inset:0;
-    z-index:-4;
-    opacity:.12;
-    background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-    background-size:45px 45px;
-    mask-image:linear-gradient(to bottom,#000,transparent 90%);
+    z-index:49;
+    pointer-events:none;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 3px,
+            rgba(255,0,0,.025) 4px
+        );
 }
 
-.glow{
+/* =========================
+   GLITCH FLAŞI
+========================= */
+
+.glitch-flash{
     position:fixed;
-    width:400px;
-    height:400px;
-    border-radius:50%;
-    background:rgba(255,23,68,.07);
-    filter:blur(100px);
-    z-index:-3;
-    animation:float 8s infinite ease-in-out;
+    inset:0;
+    background:rgba(100,0,0,.12);
+    z-index:40;
+    pointer-events:none;
+    opacity:0;
+
+    animation:randomFlash 7s infinite;
 }
 
-.glow.one{
-    left:-200px;
-    top:10%;
+@keyframes randomFlash{
+    0%,92%,100%{opacity:0}
+    93%{opacity:1}
+    94%{opacity:0}
+    96%{opacity:.5}
+    97%{opacity:0}
 }
 
-.glow.two{
-    right:-200px;
-    bottom:10%;
-    animation-delay:3s;
+/* =========================
+   SİS
+========================= */
+
+.fog{
+    position:fixed;
+    width:160%;
+    height:500px;
+    left:-30%;
+    bottom:0;
+    z-index:-5;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(100,100,100,.08),
+            transparent 65%
+        );
+
+    filter:blur(35px);
+
+    animation:fogMove 14s infinite alternate ease-in-out;
 }
 
-@keyframes float{
-    0%,100%{transform:translate(0,0)}
-    50%{transform:translate(50px,-40px)}
+.fog2{
+    top:20%;
+    bottom:auto;
+    opacity:.4;
+    animation-duration:20s;
+    animation-direction:reverse;
 }
 
-/* NAV */
+@keyframes fogMove{
+    from{
+        transform:translateX(-8%) scale(1);
+    }
+    to{
+        transform:translateX(8%) scale(1.15);
+    }
+}
+
+/* =========================
+   KAN
+========================= */
+
+.blood{
+    position:fixed;
+    top:0;
+    width:2px;
+    background:
+        linear-gradient(
+            #900000,
+            #350000,
+            transparent
+        );
+
+    z-index:30;
+    opacity:.65;
+
+    animation:fall linear infinite;
+}
+
+.blood:nth-child(1){
+    left:7%;
+    height:160px;
+    animation-duration:9s;
+}
+
+.blood:nth-child(2){
+    left:19%;
+    height:90px;
+    animation-duration:6s;
+}
+
+.blood:nth-child(3){
+    left:34%;
+    height:210px;
+    animation-duration:11s;
+}
+
+.blood:nth-child(4){
+    left:51%;
+    height:120px;
+    animation-duration:8s;
+}
+
+.blood:nth-child(5){
+    left:73%;
+    height:180px;
+    animation-duration:7s;
+}
+
+.blood:nth-child(6){
+    left:91%;
+    height:100px;
+    animation-duration:12s;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-250px);
+    }
+    to{
+        transform:translateY(110vh);
+    }
+}
+
+/* =========================
+   NAV
+========================= */
 
 nav{
     position:fixed;
@@ -98,124 +236,196 @@ nav{
     left:0;
     width:100%;
     height:70px;
+
     display:flex;
-    align-items:center;
     justify-content:space-between;
+    align-items:center;
+
     padding:0 7%;
-    background:rgba(5,5,7,.88);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(255,255,255,.06);
+
+    background:rgba(0,0,0,.88);
+
+    border-bottom:1px solid #280000;
+
+    backdrop-filter:blur(15px);
+
     z-index:100;
 }
 
 .logo{
-    font-family:Orbitron,sans-serif;
-    font-weight:800;
+    font-family:Nosifer;
+    color:#750000;
     font-size:18px;
-    letter-spacing:2px;
-}
 
-.logo span{
-    color:var(--red);
+    text-shadow:
+        0 0 8px #400000,
+        0 0 30px #250000;
+
+    animation:logoGlitch 4s infinite;
 }
 
 .logo small{
     display:block;
-    color:#666;
-    font-family:Inter;
+    font-family:'Share Tech Mono';
     font-size:7px;
+    color:#444;
     letter-spacing:3px;
-    margin-top:4px;
 }
 
 nav ul{
     display:flex;
     list-style:none;
-    gap:30px;
+    gap:28px;
 }
 
 nav a{
-    color:#777;
+    color:#444;
     text-decoration:none;
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:1px;
+    font-size:9px;
+    letter-spacing:2px;
+
     transition:.3s;
 }
 
 nav a:hover{
-    color:var(--red);
+    color:#b00000;
+    text-shadow:0 0 15px #600000;
 }
 
-/* HERO */
+@keyframes logoGlitch{
+    0%,90%,100%{
+        transform:none;
+    }
+    92%{
+        transform:skew(-8deg);
+    }
+    94%{
+        transform:translateX(5px);
+    }
+}
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
     min-height:100vh;
+
     display:grid;
-    grid-template-columns:1.1fr .9fr;
+    grid-template-columns:1fr 1fr;
+
     align-items:center;
-    gap:70px;
+
+    gap:80px;
+
     padding:130px 8% 80px;
 }
 
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:9px;
-    padding:9px 14px;
-    border:1px solid var(--border);
-    background:rgba(255,23,68,.05);
-    color:var(--red);
+.warning{
+    display:inline-block;
+
+    border:1px solid #550000;
+    padding:10px 16px;
+
+    color:#a00000;
+
     font-size:9px;
-    font-weight:800;
-    letter-spacing:2px;
-    margin-bottom:25px;
+    letter-spacing:3px;
+
+    background:rgba(80,0,0,.08);
+
+    animation:warning 1.8s infinite;
 }
 
-.dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#42e86b;
-    box-shadow:0 0 12px #42e86b;
-    animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-    0%,100%{opacity:1}
-    50%{opacity:.3}
+@keyframes warning{
+    0%,100%{
+        opacity:1;
+    }
+    50%{
+        opacity:.35;
+    }
 }
 
 .hero h1{
-    font-family:Orbitron,sans-serif;
-    font-size:clamp(48px,7vw,92px);
-    line-height:.98;
-    letter-spacing:-3px;
+    margin-top:25px;
+
+    font-family:Nosifer;
+
+    font-size:clamp(55px,9vw,125px);
+
+    color:#720000;
+
+    letter-spacing:5px;
+
+    text-shadow:
+        0 0 8px #400000,
+        0 0 30px #300000,
+        0 0 70px rgba(100,0,0,.5);
+
+    animation:
+        horrorGlitch 4s infinite,
+        flicker 6s infinite;
 }
 
-.hero h1 span{
-    color:var(--red);
-    text-shadow:0 0 35px rgba(255,23,68,.25);
+@keyframes horrorGlitch{
+
+    0%,85%,100%{
+        transform:none;
+    }
+
+    86%{
+        transform:skew(8deg);
+    }
+
+    87%{
+        transform:translateX(-8px);
+    }
+
+    88%{
+        transform:translateX(8px);
+    }
+
+    89%{
+        transform:none;
+    }
+}
+
+@keyframes flicker{
+    0%,18%,22%,63%,65%,100%{
+        opacity:1;
+    }
+
+    20%,64%{
+        opacity:.45;
+    }
 }
 
 .subtitle{
-    margin-top:25px;
-    font-family:Orbitron;
-    font-size:18px;
-    color:#aaa;
+    color:#555;
+    margin-top:20px;
+
+    letter-spacing:5px;
+    font-size:14px;
 }
 
-.subtitle strong{
-    color:white;
+.subtitle span{
+    color:#a00000;
 }
 
 .description{
-    max-width:650px;
-    margin-top:22px;
-    color:#777;
-    font-size:13px;
+    max-width:600px;
+
+    margin-top:25px;
+
+    color:#4b4b4b;
+
+    font-size:12px;
     line-height:2;
 }
+
+/* =========================
+   BUTON
+========================= */
 
 .buttons{
     display:flex;
@@ -224,412 +434,523 @@ nav a:hover{
 }
 
 .btn{
-    display:inline-block;
     padding:14px 22px;
-    border:1px solid var(--red);
-    color:var(--red);
+
+    border:1px solid #500000;
+
+    color:#900000;
+
+    background:#050000;
+
     text-decoration:none;
-    font-size:10px;
-    font-weight:800;
-    letter-spacing:1px;
+
+    font-size:9px;
+    letter-spacing:2px;
+
     transition:.3s;
 }
 
 .btn:hover{
-    color:white;
-    background:var(--red);
-    box-shadow:0 0 30px rgba(255,23,68,.25);
-    transform:translateY(-3px);
+    background:#700000;
+    color:#fff;
+
+    box-shadow:
+        0 0 30px rgba(130,0,0,.4);
+
+    transform:translateY(-4px);
 }
 
-.btn.dark{
-    border-color:#292930;
-    color:#777;
-}
+/* =========================
+   CANAVAR
+========================= */
 
-.btn.dark:hover{
-    background:#15151b;
-    border-color:#444;
-}
-
-/* PROFILE */
-
-.profile{
-    max-width:420px;
-    width:100%;
-    margin:auto;
-    background:linear-gradient(145deg,#111116,#08080b);
-    border:1px solid var(--border);
-    box-shadow:0 30px 90px rgba(0,0,0,.65);
+.creature{
     position:relative;
+
+    max-width:470px;
+    min-height:510px;
+
+    margin:auto;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #160000 0,
+            #050000 40%,
+            #000 75%
+        );
+
+    border:1px solid #320000;
+
     overflow:hidden;
+
+    box-shadow:
+        0 0 80px rgba(100,0,0,.08),
+        inset 0 0 80px rgba(100,0,0,.08);
+
+    animation:creatureFloat 6s infinite ease-in-out;
 }
 
-.profile::after{
-    content:"";
+@keyframes creatureFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+/* Göz */
+
+.eye-container{
     position:absolute;
-    width:180px;
-    height:180px;
-    right:-90px;
-    top:-90px;
+    top:90px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:80px;
+}
+
+.eye{
+    width:55px;
+    height:55px;
+
     border-radius:50%;
-    background:rgba(255,23,68,.08);
-    filter:blur(20px);
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            #ff2020 0 7%,
+            #900000 15%,
+            #300000 35%,
+            #050000 65%
+        );
+
+    box-shadow:
+        0 0 15px #800000,
+        0 0 50px rgba(150,0,0,.5);
+
+    animation:eye 2s infinite;
 }
 
-.profile-top{
-    height:4px;
-    background:linear-gradient(90deg,#70001d,var(--red),#ff8da3,var(--red),#70001d);
+@keyframes eye{
+    0%,100%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.18);
+    }
 }
 
-.profile-body{
-    padding:35px;
+/* Yüz gölgesi */
+
+.face{
+    position:absolute;
+
+    width:300px;
+    height:360px;
+
+    left:50%;
+    top:60px;
+
+    transform:translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(80,0,0,.13),
+            transparent 65%
+        );
+
+    filter:blur(4px);
+
+    animation:facePulse 3s infinite;
 }
 
-.avatar{
-    width:90px;
-    height:90px;
+@keyframes facePulse{
+    0%,100%{
+        opacity:.4;
+    }
+    50%{
+        opacity:.8;
+    }
+}
+
+/* Dişler */
+
+.teeth{
+    position:absolute;
+
+    left:50%;
+    bottom:105px;
+
+    transform:translateX(-50%);
+
+    width:170px;
+
     display:flex;
-    align-items:center;
     justify-content:center;
-    border:1px solid var(--red);
-    background:#08080b;
-    color:var(--red);
-    font-family:Orbitron;
-    font-size:28px;
-    box-shadow:0 0 30px rgba(255,23,68,.12);
-    margin-bottom:22px;
+    gap:4px;
 }
 
-.profile h2{
-    font-family:Orbitron;
-    font-size:25px;
+.tooth{
+    width:9px;
+    height:30px;
+
+    background:#bdbdbd;
+
+    clip-path:polygon(
+        0 0,
+        100% 0,
+        70% 100%,
+        30% 100%
+    );
+
+    box-shadow:0 0 5px #555;
 }
 
-.role{
-    margin-top:7px;
-    color:var(--red);
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:2px;
+.creature-name{
+    position:absolute;
+
+    bottom:45px;
+    width:100%;
+
+    text-align:center;
+
+    font-family:Creepster;
+
+    font-size:45px;
+
+    color:#850000;
+
+    letter-spacing:5px;
+
+    text-shadow:
+        0 0 15px #400000,
+        0 0 40px #300000;
 }
 
-.line{
-    height:1px;
-    background:#25252c;
-    margin:25px 0;
-}
-
-.info{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid #1d1d23;
-    font-size:10px;
-}
-
-.info span:first-child{
-    color:#666;
-}
-
-.info span:last-child{
-    color:#ddd;
-}
-
-.online{
-    color:#42e86b!important;
-}
-
-/* SECTION */
+/* =========================
+   SECTION
+========================= */
 
 section{
-    padding:100px 8%;
+    padding:110px 8%;
 }
 
 .label{
-    color:var(--red);
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:3px;
+    color:#600000;
+
+    font-size:8px;
+    letter-spacing:4px;
+
     margin-bottom:10px;
 }
 
 .title{
-    font-family:Orbitron;
-    font-size:36px;
+    font-family:Creepster;
+
+    color:#780000;
+
+    font-size:55px;
+
+    letter-spacing:3px;
+
     margin-bottom:45px;
 }
 
-/* CARDS */
+/* =========================
+   THREAT CARDS
+========================= */
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:18px;
 }
 
 .card{
-    background:linear-gradient(145deg,#111116,#0b0b0f);
-    border:1px solid #22222a;
-    padding:28px;
-    min-height:210px;
+    min-height:220px;
+
+    padding:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0c0000,
+            #030303
+        );
+
+    border:1px solid #210000;
+
+    transition:.4s;
+
     position:relative;
-    overflow:hidden;
-    transition:.35s;
 }
 
-.card::before{
+.card:after{
     content:"";
+
     position:absolute;
-    top:0;
+
     left:0;
+    bottom:0;
+
     width:0;
     height:2px;
-    background:var(--red);
-    transition:.35s;
+
+    background:#900000;
+
+    transition:.4s;
 }
 
 .card:hover{
-    transform:translateY(-8px);
-    border-color:var(--border);
-    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    transform:translateY(-10px);
+
+    border-color:#600000;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.8),
+        0 0 30px rgba(100,0,0,.1);
 }
 
-.card:hover::before{
+.card:hover:after{
     width:100%;
 }
 
-.icon{
-    color:var(--red);
-    font-family:Orbitron;
-    font-size:22px;
-    margin-bottom:25px;
+.number{
+    font-family:Creepster;
+    color:#500000;
+    font-size:38px;
 }
 
 .card h3{
-    font-family:Orbitron;
-    font-size:16px;
-    margin-bottom:12px;
+    margin-top:15px;
+
+    color:#aaa;
+
+    font-size:14px;
+
+    letter-spacing:2px;
 }
 
 .card p{
-    color:#6f6f78;
+    margin-top:14px;
+
+    color:#454545;
+
     font-size:11px;
-    line-height:1.8;
+
+    line-height:1.9;
 }
 
-/* TERMINAL */
+/* =========================
+   DOSYA
+========================= */
+
+.file{
+    max-width:900px;
+
+    margin:auto;
+
+    border:1px solid #2d0000;
+
+    background:#030303;
+
+    padding:35px;
+}
+
+.row{
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:18px 0;
+
+    border-bottom:1px solid #160000;
+
+    font-size:11px;
+}
+
+.row span:first-child{
+    color:#3d3d3d;
+}
+
+.row span:last-child{
+    color:#999;
+}
+
+.red{
+    color:#a00000!important;
+}
+
+/* =========================
+   TERMINAL
+========================= */
 
 .terminal{
     max-width:900px;
+
     margin:auto;
-    background:#08080b;
-    border:1px solid #27272f;
-    box-shadow:0 25px 70px rgba(0,0,0,.5);
+
+    background:#020202;
+
+    border:1px solid #2b0000;
 }
 
 .terminal-head{
-    display:flex;
-    align-items:center;
-    gap:7px;
     padding:14px 18px;
-    background:#101015;
-    border-bottom:1px solid #22222a;
-}
 
-.circle{
-    width:9px;
-    height:9px;
-    border-radius:50%;
-    background:#444;
-}
+    background:#090000;
 
-.terminal-name{
-    margin-left:10px;
-    color:#666;
+    border-bottom:1px solid #200000;
+
+    color:#444;
+
     font-size:9px;
 }
 
 .terminal-body{
-    padding:28px;
-    font-family:monospace;
-    font-size:12px;
-    line-height:2;
-}
+    padding:30px;
 
-.red{
-    color:var(--red);
+    line-height:2;
+
+    font-size:11px;
 }
 
 .green{
-    color:#43e66a;
+    color:#526d52;
+}
+
+.redtext{
+    color:#9a0000;
 }
 
 .gray{
-    color:#666;
+    color:#444;
 }
 
 .white{
-    color:#ddd;
+    color:#999;
 }
 
-/* STATS */
+/* =========================
+   FINAL WARNING
+========================= */
 
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    margin-top:50px;
-    background:#0c0c10;
-    border:1px solid #24242b;
-}
+.final-warning{
+    max-width:1000px;
 
-.stat{
-    text-align:center;
-    padding:32px 15px;
-    border-right:1px solid #24242b;
-}
-
-.stat:last-child{
-    border-right:0;
-}
-
-.number{
-    font-family:Orbitron;
-    font-size:30px;
-    color:var(--red);
-}
-
-.stat p{
-    color:#666;
-    font-size:8px;
-    font-weight:800;
-    letter-spacing:2px;
-    margin-top:8px;
-}
-
-/* ABOUT */
-
-.about{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-}
-
-.about-box{
-    background:#0d0d12;
-    border:1px solid #24242b;
-    padding:35px;
-}
-
-.about-box h3{
-    font-family:Orbitron;
-    font-size:20px;
-    margin-bottom:18px;
-}
-
-.about-box p{
-    color:#777;
-    font-size:12px;
-    line-height:2;
-}
-
-.highlight{
-    color:var(--red);
-}
-
-/* CONTACT */
-
-.contact{
-    text-align:center;
-    max-width:800px;
     margin:auto;
+
+    padding:60px 30px;
+
+    text-align:center;
+
+    border:1px solid #500000;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(100,0,0,.1),
+            transparent 65%
+        );
+
+    animation:borderPulse 3s infinite;
 }
 
-.contact p{
-    color:#707078;
-    font-size:13px;
+@keyframes borderPulse{
+    0%,100%{
+        box-shadow:0 0 0 rgba(100,0,0,0);
+    }
+
+    50%{
+        box-shadow:
+            0 0 50px rgba(100,0,0,.12);
+    }
+}
+
+.final-warning h2{
+    font-family:Nosifer;
+
+    font-size:clamp(28px,5vw,65px);
+
+    color:#800000;
+
+    text-shadow:
+        0 0 20px #400000;
+
+    animation:flicker 3s infinite;
+}
+
+.final-warning p{
+    margin-top:25px;
+
+    color:#4b4b4b;
+
+    font-size:11px;
+
     line-height:2;
 }
 
-.contact .buttons{
-    justify-content:center;
-}
-
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer{
-    padding:45px 8%;
-    border-top:1px solid #1d1d23;
+    padding:50px 8%;
+
+    border-top:1px solid #170000;
+
     text-align:center;
-    color:#444;
-    font-size:9px;
-    letter-spacing:1px;
+
+    color:#292929;
+
+    font-size:8px;
+
+    letter-spacing:2px;
 }
 
 footer span{
-    color:var(--red);
+    color:#650000;
 }
 
-/* REVEAL */
+/* =========================
+   MOBİL
+========================= */
 
-.reveal{
-    opacity:0;
-    transform:translateY(25px);
-    transition:opacity .7s,transform .7s;
-}
-
-.reveal.active{
-    opacity:1;
-    transform:translateY(0);
-}
-
-/* MOBILE */
-
-@media(max-width:1000px){
+@media(max-width:900px){
 
     .hero{
         grid-template-columns:1fr;
     }
 
-    .profile{
-        margin:auto;
-    }
-
     .cards{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:1fr 1fr;
     }
-
 }
 
-@media(max-width:700px){
+@media(max-width:600px){
 
     nav ul{
         display:none;
-    }
-
-    section{
-        padding:75px 6%;
     }
 
     .hero{
         padding:120px 6% 70px;
     }
 
-    .cards,
-    .about{
+    section{
+        padding:75px 6%;
+    }
+
+    .cards{
         grid-template-columns:1fr;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .stat:nth-child(2){
-        border-right:0;
-    }
-
-    .stat{
-        border-bottom:1px solid #24242b;
     }
 
     .buttons{
@@ -640,36 +961,51 @@ footer span{
         text-align:center;
     }
 
-    .hero h1{
-        font-size:48px;
+    .creature{
+        min-height:430px;
     }
 
+    .eye-container{
+        gap:50px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="grid"></div>
-<div class="glow one"></div>
-<div class="glow two"></div>
+<!-- ATMOSFER -->
+<div class="noise"></div>
+<div class="scanlines"></div>
+<div class="glitch-flash"></div>
+
+<div class="fog"></div>
+<div class="fog fog2"></div>
+
+<!-- KAN -->
+<div class="blood"></div>
+<div class="blood"></div>
+<div class="blood"></div>
+<div class="blood"></div>
+<div class="blood"></div>
+<div class="blood"></div>
+
 
 <!-- NAV -->
 
 <nav>
 
-    <div class="logo">
-        METE<span>1337</span>
-        <small>EXPERT PROFILE</small>
-    </div>
+<div class="logo">
+SHITRA
+<small>CLASSIFIED ENTITY</small>
+</div>
 
-    <ul>
-        <li><a href="#home">ANA SAYFA</a></li>
-        <li><a href="#expertise">UZMANLIK</a></li>
-        <li><a href="#terminal">SİSTEM</a></li>
-        <li><a href="#about">HAKKINDA</a></li>
-        <li><a href="#contact">İLETİŞİM</a></li>
-    </ul>
+<ul>
+<li><a href="#home">ANA DOSYA</a></li>
+<li><a href="#threat">TEHDİT</a></li>
+<li><a href="#profile">PROFİL</a></li>
+<li><a href="#terminal">KAYITLAR</a></li>
+</ul>
 
 </nav>
 
@@ -678,150 +1014,190 @@ footer span{
 
 <section class="hero" id="home">
 
-    <div>
+<div>
 
-        <div class="badge">
-            <span class="dot"></span>
-            SYSTEM ONLINE // METE1337
-        </div>
+<div class="warning">
+⚠ EXTREME DANGER // DO NOT APPROACH
+</div>
 
-        <h1>
-            METE<br>
-            <span>KARAHANLI</span>
-        </h1>
+<h1>
+SHITRA
+</h1>
 
-        <div class="subtitle">
-            <strong>METE1337'NİN</strong> UZMANI
-        </div>
+<div class="subtitle">
+<span>BİLİNMİYOR</span> • TEHLİKELİ • AKTİF
+</div>
 
-        <p class="description">
-            Dijital dünyada uzmanlık, analiz ve
-            problem çözme üzerine kurulu kişisel
-            profil sistemi.
-            <br><br>
-            <span style="color:#aaa">
-                Kod • Sistem • RP • Teknoloji • Analiz
-            </span>
-        </p>
+<p class="description">
 
-        <div class="buttons">
+Shitra, kökeni ve gerçek doğası bilinmeyen
+son derece tehlikeli bir varlıktır.
 
-            <a href="#expertise" class="btn">
-                UZMANLIKLARI GÖR
-            </a>
+<br><br>
 
-            <a href="#contact" class="btn dark">
-                İLETİŞİM
-            </a>
+Görüldüğü bölgelerde elektronik sistemler
+bozulmakta, ışıklar kesilmekte ve çevredeki
+insanlar açıklanamayan sesler bildirmektedir.
 
-        </div>
+<br><br>
 
-    </div>
+Bazı kayıtlara göre Shitra'nın insanları
+uzaktan izlediği düşünülmektedir.
+
+</p>
+
+<div class="buttons">
+
+<a href="#profile" class="btn">
+GİZLİ DOSYAYI AÇ
+</a>
+
+<a href="#terminal" class="btn">
+SON KAYIT
+</a>
+
+</div>
+
+</div>
 
 
-    <!-- PROFILE -->
+<!-- CREATURE -->
 
-    <div class="profile">
+<div class="creature">
 
-        <div class="profile-top"></div>
+<div class="face"></div>
 
-        <div class="profile-body">
+<div class="eye-container">
 
-            <div class="avatar">
-                MK
-            </div>
+<div class="eye"></div>
+<div class="eye"></div>
 
-            <h2>
-                METE KARAHANLI
-            </h2>
+</div>
 
-            <div class="role">
-                METE1337'NİN UZMANI
-            </div>
+<div class="teeth">
 
-            <div class="line"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
+<div class="tooth"></div>
 
-            <div class="info">
-                <span>Uzmanlık</span>
-                <span>METE1337</span>
-            </div>
+</div>
 
-            <div class="info">
-                <span>Analiz</span>
-                <span>ADVANCED</span>
-            </div>
+<div class="creature-name">
+SHITRA
+</div>
 
-            <div class="info">
-                <span>Sistem</span>
-                <span>ONLINE</span>
-            </div>
-
-            <div class="info">
-                <span>Durum</span>
-                <span class="online">● AKTİF</span>
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- EXPERTISE -->
+<!-- THREAT -->
 
-<section id="expertise">
+<section id="threat">
 
-    <div class="label">
-        SPECIALIZATION
-    </div>
+<div class="label">
+THREAT ASSESSMENT
+</div>
 
-    <div class="title">
-        Uzmanlık Alanları
-    </div>
+<div class="title">
+TEHDİT SEVİYESİ
+</div>
 
-    <div class="cards">
+<div class="cards">
 
-        <div class="card reveal">
-            <div class="icon">01</div>
-            <h3>METE1337</h3>
-            <p>
-                Mete1337 sistemleri ve ilgili
-                dijital yapılar hakkında uzmanlık
-                ve ileri seviye analiz.
-            </p>
-        </div>
+<div class="card">
+<div class="number">01</div>
+<h3>GÖRÜNMEZLİK</h3>
+<p>
+Varlığın karanlıkta fark edilmeden
+hareket edebildiği rapor edilmiştir.
+</p>
+</div>
 
-        <div class="card reveal">
-            <div class="icon">02</div>
-            <h3>ANALİZ</h3>
-            <p>
-                Sistemleri inceleme, detayları
-                tespit etme ve karmaşık
-                problemlere çözüm üretme.
-            </p>
-        </div>
+<div class="card">
+<div class="number">02</div>
+<h3>TAKİP</h3>
+<p>
+Shitra'nın hedeflerini uzun süre
+uzaktan izlediğine dair kayıtlar vardır.
+</p>
+</div>
 
-        <div class="card reveal">
-            <div class="icon">03</div>
-            <h3>TEKNOLOJİ</h3>
-            <p>
-                Web, yazılım ve dijital teknolojiler
-                üzerinde araştırma ve geliştirme.
-            </p>
-        </div>
+<div class="card">
+<div class="number">03</div>
+<h3>ÖNGÖRÜLEMEZ</h3>
+<p>
+Davranışları tahmin edilemez.
+Standart güvenlik protokolleri yetersizdir.
+</p>
+</div>
 
-        <div class="card reveal">
-            <div class="icon">04</div>
-            <h3>UZMANLIK</h3>
-            <p>
-                Bilgi, deneyim ve teknik becerileri
-                tek bir sistem altında birleştiren
-                uzman profil.
-            </p>
-        </div>
+</div>
 
-    </div>
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile">
+
+<div class="label">
+CLASSIFIED DATABASE
+</div>
+
+<div class="title">
+VARLIK DOSYASI
+</div>
+
+<div class="file">
+
+<div class="row">
+<span>VARLIK</span>
+<span class="red">SHITRA</span>
+</div>
+
+<div class="row">
+<span>TÜR</span>
+<span>BİLİNMİYOR</span>
+</div>
+
+<div class="row">
+<span>TEHDİT</span>
+<span class="red">EXTREME</span>
+</div>
+
+<div class="row">
+<span>AKTİVİTE</span>
+<span class="red">AKTİF</span>
+</div>
+
+<div class="row">
+<span>ZEKA</span>
+<span>TESPİT EDİLEMEDİ</span>
+</div>
+
+<div class="row">
+<span>KONUM</span>
+<span>BİLİNMİYOR</span>
+</div>
+
+<div class="row">
+<span>SON GÖRÜLME</span>
+<span class="red">[VERİ SİLİNDİ]</span>
+</div>
+
+<div class="row">
+<span>İLETİŞİM</span>
+<span class="red">KESİNLİKLE YASAK</span>
+</div>
+
+</div>
 
 </section>
 
@@ -830,298 +1206,276 @@ footer span{
 
 <section id="terminal">
 
-    <div class="label">
-        SYSTEM ACCESS
-    </div>
+<div class="label">
+RECOVERED TERMINAL LOG
+</div>
 
-    <div class="title">
-        Uzmanlık Terminali
-    </div>
+<div class="title">
+SON KAYIT
+</div>
 
-    <div class="terminal reveal">
+<div class="terminal">
 
-        <div class="terminal-head">
+<div class="terminal-head">
+security@unknown-archive : /shitra.log
+</div>
 
-            <span class="circle"></span>
-            <span class="circle"></span>
-            <span class="circle"></span>
+<div class="terminal-body">
 
-            <span class="terminal-name">
-                mete1337@karahanli:~$
-            </span>
+<div>
+<span class="green">
+security@archive
+</span>:
+<span class="redtext">~</span>$
+open shitra.log
+</div>
 
-        </div>
+<br>
 
-        <div class="terminal-body">
+<div class="gray">
+Decrypting file...
+</div>
 
-            <div>
-                <span class="green">mete@karahanli</span>:
-                <span class="red">~</span>$ whoami
-            </div>
+<div class="gray">
+Decrypting █████████████████
+</div>
 
-            <div class="white">
-                Mete Karahanlı
-            </div>
+<br>
 
-            <br>
+<div class="redtext">
+WARNING: ENTITY DETECTED
+</div>
 
-            <div>
-                <span class="green">mete@karahanli</span>:
-                <span class="red">~</span>$ status
-            </div>
+<br>
 
-            <div class="green">
-                [ONLINE] SYSTEM OPERATIONAL
-            </div>
+<div>
+ENTITY:
+<span class="white">SHITRA</span>
+</div>
 
-            <br>
+<div>
+STATUS:
+<span class="redtext">ACTIVE</span>
+</div>
 
-            <div>
-                <span class="green">mete@karahanli</span>:
-                <span class="red">~</span>$ expertise
-            </div>
+<div>
+DISTANCE:
+<span class="redtext">UNKNOWN</span>
+</div>
 
-            <div class="white">
-                &gt; Mete1337
-            </div>
+<div>
+THREAT:
+<span class="redtext">EXTREME</span>
+</div>
 
-            <div class="white">
-                &gt; Advanced Analysis
-            </div>
+<br>
 
-            <div class="white">
-                &gt; Technology
-            </div>
+<div class="gray">
+[02:13:44] Lights disabled.
+</div>
 
-            <div class="white">
-                &gt; Problem Solving
-            </div>
+<div class="gray">
+[02:13:49] Camera signal lost.
+</div>
 
-            <div class="white">
-                &gt; Digital Systems
-            </div>
+<div class="gray">
+[02:13:51] Unknown movement detected.
+</div>
 
-            <br>
+<div class="gray">
+[02:13:54] Audio corrupted.
+</div>
 
-            <div>
-                <span class="green">mete@karahanli</span>:
-                <span class="red">~</span>$ _
-            </div>
+<br>
 
-        </div>
+<div class="redtext">
+[02:13:57] IT IS BEHIND YOU.
+</div>
 
-    </div>
+<br>
 
+<div class="redtext">
+CONNECTION TERMINATED.
+</div>
 
-    <!-- STATS -->
+</div>
 
-    <div class="stats">
-
-        <div class="stat">
-            <div class="number">1337</div>
-            <p>METE1337</p>
-        </div>
-
-        <div class="stat">
-            <div class="number">∞</div>
-            <p>EXPERIENCE</p>
-        </div>
-
-        <div class="stat">
-            <div class="number">24/7</div>
-            <p>ONLINE</p>
-        </div>
-
-        <div class="stat">
-            <div class="number">100%</div>
-            <p>UZMANLIK</p>
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- ABOUT -->
+<!-- FINAL -->
 
-<section id="about">
+<section>
 
-    <div class="label">
-        PROFILE
-    </div>
+<div class="final-warning">
 
-    <div class="title">
-        Mete Karahanlı
-    </div>
+<h2>
+DON'T LOOK BACK
+</h2>
 
-    <div class="about">
+<p>
+Eğer bu dosyayı görüntülerken arkanızdan
+bir ses geldiğini duyarsanız...
 
-        <div class="about-box reveal">
+<br><br>
 
-            <h3>
-                KİM BU?
-            </h3>
+<span style="color:#850000">
+DOSYAYI KAPATMAYIN.
+</span>
 
-            <p>
-                <span class="highlight">
-                    Mete Karahanlı
-                </span>,
-                Mete1337 dünyasının uzmanı olarak
-                tanımlanan kişisel profil sistemidir.
-                <br><br>
-                Teknik bilgi, analiz, teknoloji ve
-                problem çözme odaklı bir yaklaşım
-                benimser.
-            </p>
+<br><br>
 
-        </div>
+Çünkü Shitra'nın sizi izleyip izlemediğini
+artık bilemezsiniz.
+</p>
 
-        <div class="about-box reveal">
-
-            <h3>
-                VİZYON
-            </h3>
-
-            <p>
-                Karmaşık sistemleri anlamak,
-                detayları görmek ve doğru çözümü
-                üretmek.
-                <br><br>
-                <span class="highlight">
-                    "Sistemi anlamadan sistemi
-                    değiştiremezsin."
-                </span>
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- CONTACT -->
-
-<section id="contact">
-
-    <div class="contact">
-
-        <div class="label">
-            CONNECTION
-        </div>
-
-        <div class="title">
-            İletişim
-        </div>
-
-        <p>
-            Mete Karahanlı ve Mete1337'nin uzmanlık
-            sistemi hakkında bilgi almak için
-            bağlantı kanallarından ulaşabilirsiniz.
-        </p>
-
-        <div class="buttons">
-
-            <a
-                href="https://discord.com/"
-                target="_blank"
-                class="btn"
-            >
-                DISCORD
-            </a>
-
-            <a
-                href="#home"
-                class="btn dark"
-            >
-                BAŞA DÖN
-            </a>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
 
 <footer>
 
-    <p>
-        <span>METE KARAHANLI</span>
-        // METE1337'NİN UZMANI
-    </p>
+<span>SHITRA</span>
+//
+CLASSIFIED ENTITY DATABASE
 
-    <br>
+<br><br>
 
-    <p>
-        PERSONAL PROFILE SYSTEM • 2026
-    </p>
+UNAUTHORIZED ACCESS DETECTED
 
 </footer>
 
 
 <script>
 
-const elements =
-document.querySelectorAll(".reveal");
+/* =========================
+   GÖZLER FAREYİ TAKİP ETSİN
+========================= */
 
-const observer =
-new IntersectionObserver(
-(entries)=>{
-    entries.forEach(entry=>{
-        if(entry.isIntersecting){
-            entry.target.classList.add("active");
-        }
-    });
-},
-{threshold:.12}
-);
+const eyes=document.querySelectorAll(".eye");
 
-elements.forEach(
-el=>observer.observe(el)
-);
+document.addEventListener("mousemove",(e)=>{
 
+    const mouseX=e.clientX;
+    const mouseY=e.clientY;
 
-/* TERMINAL CURSOR */
+    eyes.forEach(eye=>{
 
-const terminal =
-document.querySelector(".terminal-body");
+        const rect=eye.getBoundingClientRect();
 
-setInterval(()=>{
-    const last =
-        terminal.lastElementChild;
+        const eyeX=rect.left+rect.width/2;
+        const eyeY=rect.top+rect.height/2;
 
-    if(last){
-        last.style.opacity =
-            last.style.opacity === "0" ? "1" : "0";
-    }
-},600);
+        const angle=Math.atan2(
+            mouseY-eyeY,
+            mouseX-eyeX
+        );
 
+        const distance=Math.min(
+            8,
+            Math.hypot(
+                mouseX-eyeX,
+                mouseY-eyeY
+            )/40
+        );
 
-/* MOUSE EFFECT */
+        const x=Math.cos(angle)*distance;
+        const y=Math.sin(angle)*distance;
 
-document.addEventListener(
-"mousemove",
-e=>{
-
-    const x =
-        (e.clientX/window.innerWidth-.5)*8;
-
-    const y =
-        (e.clientY/window.innerHeight-.5)*8;
-
-    document.querySelectorAll(".glow")
-    .forEach((g,i)=>{
-
-        const amount =
-            i === 0 ? 1 : -1;
-
-        g.style.transform =
-            `translate(${x*amount}px,${y*amount}px)`;
+        eye.style.transform=
+            `translate(${x}px,${y}px)`;
 
     });
 
 });
+
+
+/* =========================
+   RASTGELE EKRAN GLITCH
+========================= */
+
+setInterval(()=>{
+
+    if(Math.random()<0.25){
+
+        document.body.style.transform=
+            `translate(${Math.random()*4-2}px,
+             ${Math.random()*4-2}px)`;
+
+        setTimeout(()=>{
+
+            document.body.style.transform="";
+
+        },80);
+
+    }
+
+},1200);
+
+
+/* =========================
+   TERMINAL İMLECİ
+========================= */
+
+const terminal=
+document.querySelector(".terminal-body");
+
+setInterval(()=>{
+
+    terminal.style.opacity=
+        terminal.style.opacity==="0.7"
+        ?"1"
+        :".7";
+
+},900);
+
+
+/* =========================
+   SAYFA AÇILIŞI
+========================= */
+
+window.addEventListener("load",()=>{
+
+    document.body.style.opacity="0";
+
+    setTimeout(()=>{
+
+        document.body.style.transition=
+            "opacity 2s";
+
+        document.body.style.opacity="1";
+
+    },150);
+
+});
+
+
+/* =========================
+   RASTGELE KIRMIZI FLAŞ
+========================= */
+
+setInterval(()=>{
+
+    if(Math.random()<0.12){
+
+        document.querySelector(
+            ".glitch-flash"
+        ).style.opacity=".7";
+
+        setTimeout(()=>{
+
+            document.querySelector(
+                ".glitch-flash"
+            ).style.opacity="0";
+
+        },70);
+
+    }
+
+},1000);
 
 </script>
 
