@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SITHRA // PROGRAMLAMA UZMANI</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #00ff41;
+    --green2: #39ff14;
+    --dark: #020603;
+    --panel: rgba(0, 255, 65, 0.035);
+    --border: rgba(0, 255, 65, 0.25);
+    --text: #d8ffe0;
+    --muted: #719078;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #010201;
+    color: var(--text);
+    font-family: 'Fira Code', monospace;
+    overflow-x: hidden;
+}
+
+/* MATRIX BACKGROUND */
+
+#matrix {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    opacity: .12;
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,255,65,.025) 4px
+    );
+}
+
+/* NAVBAR */
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    background: rgba(0, 3, 1, .88);
+    border-bottom: 1px solid rgba(0,255,65,.15);
+    backdrop-filter: blur(15px);
+    z-index: 100;
+}
+
+.logo {
+    font-family: Orbitron;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--green);
+    text-shadow: 0 0 15px var(--green);
+}
+
+.logo span {
+    color: white;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+nav a {
+    color: #b7c9ba;
+    text-decoration: none;
+    font-size: 12px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: var(--green);
+    text-shadow: 0 0 12px var(--green);
+}
+
+/* HERO */
+
+.hero {
+    min-height: 100vh;
+    padding: 140px 7% 80px;
+    display: flex;
+    align-items: center;
+    gap: 70px;
+}
+
+.hero-left {
+    flex: 1;
+}
+
+.terminal-small {
+    color: var(--green);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.terminal-small::before {
+    content: "> ";
+}
+
+.hero h1 {
+    font-family: Orbitron;
+    font-size: clamp(55px, 9vw, 115px);
+    letter-spacing: 8px;
+    color: var(--green);
+    text-shadow:
+        0 0 10px var(--green),
+        0 0 30px rgba(0,255,65,.5);
+    animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+    0%, 90%, 100% {
+        transform: translate(0);
+    }
+    92% {
+        transform: translate(-3px, 2px);
+    }
+    94% {
+        transform: translate(3px, -2px);
+    }
+    96% {
+        transform: translate(-2px, 0);
+    }
+}
+
+.subtitle {
+    margin: 10px 0 25px;
+    font-family: Orbitron;
+    font-size: 20px;
+    color: white;
+}
+
+.subtitle span {
+    color: var(--green);
+}
+
+.description {
+    max-width: 650px;
+    color: #8ba690;
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+/* TERMINAL */
+
+.terminal {
+    margin-top: 35px;
+    max-width: 600px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: rgba(0,0,0,.65);
+    box-shadow: 0 0 30px rgba(0,255,65,.08);
+    overflow: hidden;
+}
+
+.terminal-bar {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border);
+    color: #66816d;
+    font-size: 11px;
+}
+
+.dots {
+    color: var(--green);
+    letter-spacing: 5px;
+}
+
+.terminal-body {
+    padding: 20px;
+    line-height: 1.8;
+    font-size: 13px;
+}
+
+.prompt {
+    color: var(--green);
+}
+
+.terminal-output {
+    color: #a3b9a7;
+}
+
+/* BUTTONS */
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 14px 25px;
+    border: 1px solid var(--green);
+    color: var(--green);
+    text-decoration: none;
+    font-size: 12px;
+    transition: .3s;
+    background: rgba(0,255,65,.03);
+}
+
+.btn:hover {
+    background: var(--green);
+    color: #000;
+    box-shadow: 0 0 30px rgba(0,255,65,.5);
+}
+
+/* AVATAR */
+
+.hero-right {
+    flex: .8;
+    display: flex;
+    justify-content: center;
+}
+
+.avatar {
+    width: min(440px, 80vw);
+    height: 440px;
+    border-radius: 50%;
+    border: 1px solid var(--green);
+    box-shadow:
+        0 0 30px rgba(0,255,65,.2),
+        inset 0 0 50px rgba(0,255,65,.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.avatar::before,
+.avatar::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,65,.3);
+}
+
+.avatar::before {
+    inset: -25px;
+    animation: rotate 15s linear infinite;
+}
+
+.avatar::after {
+    inset: 25px;
+    animation: rotate 10s linear reverse infinite;
+}
+
+@keyframes rotate {
+    to { transform: rotate(360deg); }
+}
+
+.avatar-content {
+    text-align: center;
+    z-index: 2;
+}
+
+.code-symbol {
+    font-size: 85px;
+    color: var(--green);
+    text-shadow: 0 0 35px var(--green);
+}
+
+.avatar-content h3 {
+    font-family: Orbitron;
+    color: white;
+    margin-top: 15px;
+}
+
+.online {
+    margin-top: 15px;
+    font-size: 11px;
+    color: var(--green);
+}
+
+.online::before {
+    content: "●";
+    margin-right: 8px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: .2; }
+}
+
+/* SECTIONS */
+
+section {
+    padding: 100px 7%;
+}
+
+.section-title {
+    font-family: Orbitron;
+    color: var(--green);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.section-title::before {
+    content: "// ";
+}
+
+h2 {
+    font-family: Orbitron;
+    font-size: 35px;
+    margin-bottom: 50px;
+    color: white;
+}
+
+/* SKILLS */
+
+.skills {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+}
+
+.skill {
+    padding: 30px 15px;
+    text-align: center;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    transition: .3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill:hover {
+    transform: translateY(-8px);
+    border-color: var(--green);
+    box-shadow: 0 0 25px rgba(0,255,65,.15);
+}
+
+.skill-icon {
+    font-size: 38px;
+    color: var(--green);
+    margin-bottom: 15px;
+}
+
+.skill h3 {
+    font-size: 15px;
+    color: white;
+}
+
+.skill p {
+    color: var(--green);
+    font-size: 10px;
+    margin-top: 8px;
+}
+
+/* PROGRESS */
+
+.progress {
+    height: 3px;
+    background: #102015;
+    margin-top: 18px;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+}
+
+/* STATS */
+
+.stats {
+    margin-top: 70px;
+    border: 1px solid var(--border);
+    padding: 35px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: rgba(0,255,65,.02);
+}
+
+.stat {
+    text-align: center;
+    border-right: 1px solid rgba(0,255,65,.15);
+}
+
+.stat:last-child {
+    border: none;
+}
+
+.stat-number {
+    font-family: Orbitron;
+    font-size: 28px;
+    color: var(--green);
+    text-shadow: 0 0 15px rgba(0,255,65,.5);
+}
+
+.stat p {
+    font-size: 10px;
+    color: #6f8874;
+    margin-top: 8px;
+}
+
+/* ABOUT */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.about-box {
+    border: 1px solid var(--border);
+    padding: 35px;
+    background: var(--panel);
+}
+
+.about-box p {
+    color: #8da792;
+    line-height: 2;
+    font-size: 13px;
+}
+
+.code-box {
+    font-size: 12px;
+    line-height: 1.8;
+    color: #91aa96;
+}
+
+.code-green {
+    color: var(--green);
+}
+
+.code-blue {
+    color: #65b5ff;
+}
+
+.code-yellow {
+    color: #dfff70;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 60px 7%;
+    text-align: center;
+    border-top: 1px solid rgba(0,255,65,.15);
+    color: #49604e;
+    font-size: 11px;
+}
+
+footer span {
+    color: var(--green);
+}
+
+/* CURSOR */
+
+.cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 15px var(--green);
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* MOBILE */
+
+@media(max-width: 900px) {
+
+    nav ul {
+        display: none;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 130px;
+    }
+
+    .description,
+    .terminal {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .buttons {
+        justify-content: center;
+    }
+
+    .skills {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .stat {
+        border-right: none;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .avatar {
+        width: 330px;
+        height: 330px;
+    }
+}
+
+@media(max-width: 500px) {
+
+    .skills {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+    section {
+        padding: 70px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="scanlines"></div>
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        &lt;/&gt; <span>SITHRA</span>
+    </div>
+
+    <ul>
+        <li><a href="#home">ANA SAYFA</a></li>
+        <li><a href="#skills">YETENEKLER</a></li>
+        <li><a href="#about">HAKKIMDA</a></li>
+        <li><a href="#contact">İLETİŞİM</a></li>
+    </ul>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-left">
+
+        <div class="terminal-small">
+            system.boot()
+        </div>
+
+        <h1>SITHRA</h1>
+
+        <div class="subtitle">
+            &lt;/&gt; <span>PROGRAMLAMA UZMANI</span>
+        </div>
+
+        <p class="description">
+            Kod yazmak benim için sadece bir iş değil,
+            bir tutkudur. Modern teknolojiler ile
+            projeler geliştiriyor, sistemler tasarlıyor
+            ve sürekli yeni şeyler öğreniyorum.
+        </p>
+
+        <div class="terminal">
+
+            <div class="terminal-bar">
+                <span class="dots">● ● ●</span>
+                &nbsp; sithra@dev: ~
+            </div>
+
+            <div class="terminal-body">
+
+                <div>
+                    <span class="prompt">sithra@dev:~$</span>
+                    whoami
+                </div>
+
+                <div class="terminal-output">
+                    &gt; Programmer<br>
+                    &gt; Problem Solver<br>
+                    &gt; Software Developer<br>
+                    &gt; Code Enthusiast<br>
+                    &gt; System Architect
+                </div>
+
+                <br>
+
+                <div>
+                    <span class="prompt">sithra@dev:~$</span>
+                    <span id="typing"></span><span>_</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <a href="#skills" class="btn">
+                &gt; YETENEKLERİM
+            </a>
+
+            <a href="#contact" class="btn">
+                &gt; İLETİŞİME GEÇ
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-right">
+
+        <div class="avatar">
+
+            <div class="avatar-content">
+
+                <div class="code-symbol">
+                    &lt;/&gt;
+                </div>
+
+                <h3>CODE MODE</h3>
+
+                <div class="online">
+                    SYSTEM ONLINE
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SKILLS -->
+
+<section id="skills">
+
+    <div class="section-title">
+        YETENEKLERİM
+    </div>
+
+    <h2>BİLDİĞİM TEKNOLOJİLER</h2>
+
+    <div class="skills">
+
+        <div class="skill">
+            <div class="skill-icon">HTML</div>
+            <h3>HTML</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:95%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">CSS</div>
+            <h3>CSS</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:93%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">JS</div>
+            <h3>JavaScript</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:91%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">PY</div>
+            <h3>Python</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:94%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">C++</div>
+            <h3>C++</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:88%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">C#</div>
+            <h3>C#</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:87%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">JAVA</div>
+            <h3>Java</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:86%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">PHP</div>
+            <h3>PHP</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:90%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">SQL</div>
+            <h3>SQL</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:92%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-icon">TS</div>
+            <h3>TypeScript</h3>
+            <p>UZMAN</p>
+            <div class="progress"><span style="width:89%"></span></div>
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-number">10+</div>
+            <p>TEKNOLOJİ</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">100+</div>
+            <p>PROJE</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">7/24</div>
+            <p>KOD YAZIYOR</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">∞</div>
+            <p>ÖĞRENME</p>
+        </div>
+
+        <div class="stat">
+            <div class="stat-number">1</div>
+            <p>PROGRAMCI</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="section-title">
+        HAKKIMDA
+    </div>
+
+    <h2>ABOUT.PY</h2>
+
+    <div class="about-grid">
+
+        <div class="about-box">
+
+            <p>
+                Ben <span style="color:#00ff41">Sithra</span>.
+                Yazılım geliştirme, problem çözme ve yeni
+                teknolojiler öğrenme konusunda tutkulu
+                bir programlama uzmanıyım.
+            </p>
+
+            <br>
+
+            <p>
+                Farklı programlama dilleri ve teknolojiler
+                kullanarak modern, hızlı ve güvenilir
+                sistemler geliştiriyorum.
+            </p>
+
+            <br>
+
+            <p style="color:#00ff41">
+                Kodla. Öğren. Geliştir. Tekrarla.
+            </p>
+
+        </div>
+
+
+        <div class="about-box code-box">
+
+            <span class="code-blue">class</span>
+            <span class="code-green"> Developer</span>:
+
+            <br><br>
+
+            &nbsp;&nbsp;<span class="code-blue">def</span>
+            <span class="code-green"> __init__</span>(self):
+
+            <br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            self.name =
+            <span class="code-yellow">"Sithra"</span>
+
+            <br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            self.role =
+            <span class="code-yellow">
+            "Programlama Uzmanı"
+            </span>
+
+            <br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            self.languages =
+            <span class="code-yellow">
+            ["HTML", "CSS", "JS", "Python", "C++", "C#", "Java", "PHP", "SQL", "TS"]
+            </span>
+
+            <br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            self.status =
+            <span class="code-yellow">
+            "Coding..."
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+    <div class="section-title">
+        İLETİŞİM
+    </div>
+
+    <h2>LET'S BUILD SOMETHING</h2>
+
+    <div class="about-box" style="text-align:center">
+
+        <p>
+            Bir proje fikrin mi var?
+            Birlikte bir şeyler geliştirebiliriz.
+        </p>
+
+        <br>
+
+        <a
+            href="mailto:mail@example.com"
+            class="btn"
+        >
+            &gt; E-MAIL GÖNDER
+        </a>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        <span>&lt;/&gt;</span>
+        SITHRA
+        // PROGRAMLAMA UZMANI
+    </p>
+
+    <br>
+
+    <p>
+        SYSTEM STATUS:
+        <span>ONLINE</span>
+    </p>
+
+</footer>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+/* MATRIX EFFECT */
+
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters =
+"01ABCDEFGHIJKLMNOPQRSTUVWXYZ{}[]<>/\\\\$#@%";
+
+const fontSize = 14;
+const columns = Math.floor(canvas.width / fontSize);
+
+const drops = [];
+
+for(let i = 0; i < columns; i++) {
+    drops[i] = Math.random() * -100;
+}
+
+function drawMatrix() {
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff41";
+    ctx.font = fontSize + "px monospace";
+
+    for(let i = 0; i < drops.length; i++) {
+
+        const text =
+            letters[Math.floor(Math.random() * letters.length)];
+
+        ctx.fillText(
+            text,
+            i * fontSize,
+            drops[i] * fontSize
+        );
+
+        if(
+            drops[i] * fontSize > canvas.height
+            &&
+            Math.random() > 0.975
+        ) {
+            drops[i] = 0;
+        }
+
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix, 35);
+
+window.addEventListener("resize", () => {
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+});
+
+
+/* TERMINAL TYPING */
+
+const texts = [
+    "init developer_mode...",
+    "loading skills...",
+    "compiling creativity...",
+    "system.ready()",
+    "welcome to sithra.dev"
+];
+
+let textIndex = 0;
+let charIndex = 0;
+let deleting = false;
+
+const typing = document.getElementById("typing");
+
+function typeEffect() {
+
+    const current = texts[textIndex];
+
+    if(!deleting) {
+
+        typing.textContent =
+            current.substring(0, charIndex++);
+
+        if(charIndex > current.length) {
+
+            deleting = true;
+
+            setTimeout(typeEffect, 1500);
+
+            return;
+        }
+
+    } else {
+
+        typing.textContent =
+            current.substring(0, charIndex--);
+
+        if(charIndex < 0) {
+
+            deleting = false;
+            charIndex = 0;
+
+            textIndex++;
+
+            if(textIndex >= texts.length) {
+                textIndex = 0;
+            }
+
+        }
+
+    }
+
+    setTimeout(
+        typeEffect,
+        deleting ? 35 : 70
+    );
+}
+
+typeEffect();
+
+
+/* CUSTOM CURSOR */
+
+const cursor = document.createElement("div");
+
+cursor.className = "cursor";
+
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove", e => {
+
+    cursor.style.left =
+        e.clientX + "px";
+
+    cursor.style.top =
+        e.clientY + "px";
+
+});
+
+
+/* RANDOM GLITCH */
+
+setInterval(() => {
+
+    const title =
+        document.querySelector("h1");
+
+    if(Math.random() > .7) {
+
+        title.style.textShadow =
+            "5px 0 #ff0040, -5px 0 #00ffff";
+
+        setTimeout(() => {
+
+            title.style.textShadow =
+                "0 0 10px #00ff41, 0 0 30px rgba(0,255,65,.5)";
+
+        }, 100);
+
+    }
+
+}, 2000);
+
+</script>
+
+</body>
+</html>
