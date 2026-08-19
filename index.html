@@ -2,11 +2,13 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SHITRA // CLASSIFIED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NEXUS AI</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Share+Tech+Mono&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 *{
     margin:0;
@@ -14,1468 +16,1194 @@
     box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
-}
-
 body{
-    background:#000;
-    color:#aaa;
-    font-family:'Share Tech Mono',monospace;
-    overflow-x:hidden;
-    cursor:crosshair;
+    min-height:100vh;
+    background:#050608;
+    color:#fff;
+    font-family:Inter,Arial,sans-serif;
+    overflow:hidden;
 }
 
 /* =========================
-   ANA ATMOSFER
+   ARKA PLAN
 ========================= */
 
-body:before{
-    content:"";
+.background{
     position:fixed;
     inset:0;
-    z-index:-20;
+    z-index:-10;
+    overflow:hidden;
     background:
         radial-gradient(
-            circle at 50% 45%,
-            rgba(120,0,0,.15),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 10% 80%,
-            rgba(80,0,0,.12),
+            circle at 20% 20%,
+            rgba(93,60,255,.16),
             transparent 30%
         ),
-        #000;
-}
-
-/* Film noise */
-
-.noise{
-    position:fixed;
-    inset:-50%;
-    z-index:50;
-    pointer-events:none;
-    opacity:.06;
-
-    background-image:
-        repeating-radial-gradient(
-            circle at 0 0,
-            #fff 0,
-            transparent 1px,
-            transparent 3px
-        );
-
-    background-size:5px 5px;
-
-    animation:noise .15s infinite;
-}
-
-@keyframes noise{
-    0%{transform:translate(0,0)}
-    25%{transform:translate(2%,1%)}
-    50%{transform:translate(-1%,2%)}
-    75%{transform:translate(1%,-2%)}
-    100%{transform:translate(-2%,1%)}
-}
-
-/* Scanlines */
-
-.scanlines{
-    position:fixed;
-    inset:0;
-    z-index:49;
-    pointer-events:none;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            transparent 0,
-            transparent 3px,
-            rgba(255,0,0,.025) 4px
-        );
-}
-
-/* =========================
-   GLITCH FLAŞI
-========================= */
-
-.glitch-flash{
-    position:fixed;
-    inset:0;
-    background:rgba(100,0,0,.12);
-    z-index:40;
-    pointer-events:none;
-    opacity:0;
-
-    animation:randomFlash 7s infinite;
-}
-
-@keyframes randomFlash{
-    0%,92%,100%{opacity:0}
-    93%{opacity:1}
-    94%{opacity:0}
-    96%{opacity:.5}
-    97%{opacity:0}
-}
-
-/* =========================
-   SİS
-========================= */
-
-.fog{
-    position:fixed;
-    width:160%;
-    height:500px;
-    left:-30%;
-    bottom:0;
-    z-index:-5;
-
-    background:
         radial-gradient(
-            ellipse,
-            rgba(100,100,100,.08),
-            transparent 65%
-        );
-
-    filter:blur(35px);
-
-    animation:fogMove 14s infinite alternate ease-in-out;
+            circle at 80% 70%,
+            rgba(0,180,255,.12),
+            transparent 30%
+        ),
+        #050608;
 }
 
-.fog2{
-    top:20%;
-    bottom:auto;
-    opacity:.4;
-    animation-duration:20s;
-    animation-direction:reverse;
-}
-
-@keyframes fogMove{
-    from{
-        transform:translateX(-8%) scale(1);
-    }
-    to{
-        transform:translateX(8%) scale(1.15);
-    }
-}
-
-/* =========================
-   KAN
-========================= */
-
-.blood{
-    position:fixed;
-    top:0;
-    width:2px;
-    background:
-        linear-gradient(
-            #900000,
-            #350000,
-            transparent
-        );
-
-    z-index:30;
-    opacity:.65;
-
-    animation:fall linear infinite;
-}
-
-.blood:nth-child(1){
-    left:7%;
-    height:160px;
-    animation-duration:9s;
-}
-
-.blood:nth-child(2){
-    left:19%;
-    height:90px;
-    animation-duration:6s;
-}
-
-.blood:nth-child(3){
-    left:34%;
-    height:210px;
-    animation-duration:11s;
-}
-
-.blood:nth-child(4){
-    left:51%;
-    height:120px;
-    animation-duration:8s;
-}
-
-.blood:nth-child(5){
-    left:73%;
-    height:180px;
-    animation-duration:7s;
-}
-
-.blood:nth-child(6){
-    left:91%;
-    height:100px;
-    animation-duration:12s;
-}
-
-@keyframes fall{
-    from{
-        transform:translateY(-250px);
-    }
-    to{
-        transform:translateY(110vh);
-    }
-}
-
-/* =========================
-   NAV
-========================= */
-
-nav{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:70px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    padding:0 7%;
-
-    background:rgba(0,0,0,.88);
-
-    border-bottom:1px solid #280000;
-
-    backdrop-filter:blur(15px);
-
-    z-index:100;
-}
-
-.logo{
-    font-family:Nosifer;
-    color:#750000;
-    font-size:18px;
-
-    text-shadow:
-        0 0 8px #400000,
-        0 0 30px #250000;
-
-    animation:logoGlitch 4s infinite;
-}
-
-.logo small{
-    display:block;
-    font-family:'Share Tech Mono';
-    font-size:7px;
-    color:#444;
-    letter-spacing:3px;
-}
-
-nav ul{
-    display:flex;
-    list-style:none;
-    gap:28px;
-}
-
-nav a{
-    color:#444;
-    text-decoration:none;
-    font-size:9px;
-    letter-spacing:2px;
-
-    transition:.3s;
-}
-
-nav a:hover{
-    color:#b00000;
-    text-shadow:0 0 15px #600000;
-}
-
-@keyframes logoGlitch{
-    0%,90%,100%{
-        transform:none;
-    }
-    92%{
-        transform:skew(-8deg);
-    }
-    94%{
-        transform:translateX(5px);
-    }
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    min-height:100vh;
-
-    display:grid;
-    grid-template-columns:1fr 1fr;
-
-    align-items:center;
-
-    gap:80px;
-
-    padding:130px 8% 80px;
-}
-
-.warning{
-    display:inline-block;
-
-    border:1px solid #550000;
-    padding:10px 16px;
-
-    color:#a00000;
-
-    font-size:9px;
-    letter-spacing:3px;
-
-    background:rgba(80,0,0,.08);
-
-    animation:warning 1.8s infinite;
-}
-
-@keyframes warning{
-    0%,100%{
-        opacity:1;
-    }
-    50%{
-        opacity:.35;
-    }
-}
-
-.hero h1{
-    margin-top:25px;
-
-    font-family:Nosifer;
-
-    font-size:clamp(55px,9vw,125px);
-
-    color:#720000;
-
-    letter-spacing:5px;
-
-    text-shadow:
-        0 0 8px #400000,
-        0 0 30px #300000,
-        0 0 70px rgba(100,0,0,.5);
-
-    animation:
-        horrorGlitch 4s infinite,
-        flicker 6s infinite;
-}
-
-@keyframes horrorGlitch{
-
-    0%,85%,100%{
-        transform:none;
-    }
-
-    86%{
-        transform:skew(8deg);
-    }
-
-    87%{
-        transform:translateX(-8px);
-    }
-
-    88%{
-        transform:translateX(8px);
-    }
-
-    89%{
-        transform:none;
-    }
-}
-
-@keyframes flicker{
-    0%,18%,22%,63%,65%,100%{
-        opacity:1;
-    }
-
-    20%,64%{
-        opacity:.45;
-    }
-}
-
-.subtitle{
-    color:#555;
-    margin-top:20px;
-
-    letter-spacing:5px;
-    font-size:14px;
-}
-
-.subtitle span{
-    color:#a00000;
-}
-
-.description{
-    max-width:600px;
-
-    margin-top:25px;
-
-    color:#4b4b4b;
-
-    font-size:12px;
-    line-height:2;
-}
-
-/* =========================
-   BUTON
-========================= */
-
-.buttons{
-    display:flex;
-    gap:12px;
-    margin-top:30px;
-}
-
-.btn{
-    padding:14px 22px;
-
-    border:1px solid #500000;
-
-    color:#900000;
-
-    background:#050000;
-
-    text-decoration:none;
-
-    font-size:9px;
-    letter-spacing:2px;
-
-    transition:.3s;
-}
-
-.btn:hover{
-    background:#700000;
-    color:#fff;
-
-    box-shadow:
-        0 0 30px rgba(130,0,0,.4);
-
-    transform:translateY(-4px);
-}
-
-/* =========================
-   CANAVAR
-========================= */
-
-.creature{
-    position:relative;
-
-    max-width:470px;
-    min-height:510px;
-
-    margin:auto;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #160000 0,
-            #050000 40%,
-            #000 75%
-        );
-
-    border:1px solid #320000;
-
-    overflow:hidden;
-
-    box-shadow:
-        0 0 80px rgba(100,0,0,.08),
-        inset 0 0 80px rgba(100,0,0,.08);
-
-    animation:creatureFloat 6s infinite ease-in-out;
-}
-
-@keyframes creatureFloat{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-8px);
-    }
-}
-
-/* Göz */
-
-.eye-container{
+.orb{
     position:absolute;
-    top:90px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    display:flex;
-    gap:80px;
-}
-
-.eye{
-    width:55px;
-    height:55px;
-
+    width:450px;
+    height:450px;
     border-radius:50%;
-
-    background:
-        radial-gradient(
-            circle at 50% 50%,
-            #ff2020 0 7%,
-            #900000 15%,
-            #300000 35%,
-            #050000 65%
-        );
-
-    box-shadow:
-        0 0 15px #800000,
-        0 0 50px rgba(150,0,0,.5);
-
-    animation:eye 2s infinite;
-}
-
-@keyframes eye{
-    0%,100%{
-        transform:scale(1);
-    }
-    50%{
-        transform:scale(1.18);
-    }
-}
-
-/* Yüz gölgesi */
-
-.face{
-    position:absolute;
-
-    width:300px;
-    height:360px;
-
-    left:50%;
-    top:60px;
-
-    transform:translateX(-50%);
-
-    border-radius:50%;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(80,0,0,.13),
-            transparent 65%
-        );
-
-    filter:blur(4px);
-
-    animation:facePulse 3s infinite;
-}
-
-@keyframes facePulse{
-    0%,100%{
-        opacity:.4;
-    }
-    50%{
-        opacity:.8;
-    }
-}
-
-/* Dişler */
-
-.teeth{
-    position:absolute;
-
-    left:50%;
-    bottom:105px;
-
-    transform:translateX(-50%);
-
-    width:170px;
-
-    display:flex;
-    justify-content:center;
-    gap:4px;
-}
-
-.tooth{
-    width:9px;
-    height:30px;
-
-    background:#bdbdbd;
-
-    clip-path:polygon(
-        0 0,
-        100% 0,
-        70% 100%,
-        30% 100%
-    );
-
-    box-shadow:0 0 5px #555;
-}
-
-.creature-name{
-    position:absolute;
-
-    bottom:45px;
-    width:100%;
-
-    text-align:center;
-
-    font-family:Creepster;
-
-    font-size:45px;
-
-    color:#850000;
-
-    letter-spacing:5px;
-
-    text-shadow:
-        0 0 15px #400000,
-        0 0 40px #300000;
-}
-
-/* =========================
-   SECTION
-========================= */
-
-section{
-    padding:110px 8%;
-}
-
-.label{
-    color:#600000;
-
-    font-size:8px;
-    letter-spacing:4px;
-
-    margin-bottom:10px;
-}
-
-.title{
-    font-family:Creepster;
-
-    color:#780000;
-
-    font-size:55px;
-
-    letter-spacing:3px;
-
-    margin-bottom:45px;
-}
-
-/* =========================
-   THREAT CARDS
-========================= */
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-
-    gap:18px;
-}
-
-.card{
-    min-height:220px;
-
-    padding:30px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0c0000,
-            #030303
-        );
-
-    border:1px solid #210000;
-
-    transition:.4s;
-
-    position:relative;
-}
-
-.card:after{
-    content:"";
-
-    position:absolute;
-
-    left:0;
-    bottom:0;
-
-    width:0;
-    height:2px;
-
-    background:#900000;
-
-    transition:.4s;
-}
-
-.card:hover{
-    transform:translateY(-10px);
-
-    border-color:#600000;
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.8),
-        0 0 30px rgba(100,0,0,.1);
-}
-
-.card:hover:after{
-    width:100%;
-}
-
-.number{
-    font-family:Creepster;
-    color:#500000;
-    font-size:38px;
-}
-
-.card h3{
-    margin-top:15px;
-
-    color:#aaa;
-
-    font-size:14px;
-
-    letter-spacing:2px;
-}
-
-.card p{
-    margin-top:14px;
-
-    color:#454545;
-
-    font-size:11px;
-
-    line-height:1.9;
-}
-
-/* =========================
-   DOSYA
-========================= */
-
-.file{
-    max-width:900px;
-
-    margin:auto;
-
-    border:1px solid #2d0000;
-
-    background:#030303;
-
-    padding:35px;
-}
-
-.row{
-    display:flex;
-
-    justify-content:space-between;
-
-    padding:18px 0;
-
-    border-bottom:1px solid #160000;
-
-    font-size:11px;
-}
-
-.row span:first-child{
-    color:#3d3d3d;
-}
-
-.row span:last-child{
-    color:#999;
-}
-
-.red{
-    color:#a00000!important;
-}
-
-/* =========================
-   TERMINAL
-========================= */
-
-.terminal{
-    max-width:900px;
-
-    margin:auto;
-
-    background:#020202;
-
-    border:1px solid #2b0000;
-}
-
-.terminal-head{
-    padding:14px 18px;
-
-    background:#090000;
-
-    border-bottom:1px solid #200000;
-
-    color:#444;
-
-    font-size:9px;
-}
-
-.terminal-body{
-    padding:30px;
-
-    line-height:2;
-
-    font-size:11px;
-}
-
-.green{
-    color:#526d52;
-}
-
-.redtext{
-    color:#9a0000;
-}
-
-.gray{
-    color:#444;
-}
-
-.white{
-    color:#999;
-}
-
-/* =========================
-   FINAL WARNING
-========================= */
-
-.final-warning{
-    max-width:1000px;
-
-    margin:auto;
-
-    padding:60px 30px;
-
-    text-align:center;
-
-    border:1px solid #500000;
 
     background:
         radial-gradient(
             circle,
-            rgba(100,0,0,.1),
-            transparent 65%
+            rgba(80,100,255,.16),
+            transparent 70%
         );
 
-    animation:borderPulse 3s infinite;
+    filter:blur(30px);
+
+    animation:float 12s infinite alternate ease-in-out;
 }
 
-@keyframes borderPulse{
-    0%,100%{
-        box-shadow:0 0 0 rgba(100,0,0,0);
+.orb.one{
+    left:-180px;
+    top:-150px;
+}
+
+.orb.two{
+    right:-180px;
+    bottom:-150px;
+    animation-delay:-5s;
+}
+
+@keyframes float{
+
+    from{
+        transform:translate(0,0) scale(1);
     }
 
-    50%{
-        box-shadow:
-            0 0 50px rgba(100,0,0,.12);
+    to{
+        transform:translate(80px,50px) scale(1.15);
     }
+
 }
 
-.final-warning h2{
-    font-family:Nosifer;
+/* Grid */
 
-    font-size:clamp(28px,5vw,65px);
+.grid{
+    position:absolute;
+    inset:0;
 
-    color:#800000;
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
 
-    text-shadow:
-        0 0 20px #400000;
+    background-size:50px 50px;
 
-    animation:flicker 3s infinite;
-}
-
-.final-warning p{
-    margin-top:25px;
-
-    color:#4b4b4b;
-
-    font-size:11px;
-
-    line-height:2;
+    mask-image:
+        radial-gradient(
+            circle,
+            black,
+            transparent 80%
+        );
 }
 
 /* =========================
-   FOOTER
+   UYGULAMA
 ========================= */
 
-footer{
-    padding:50px 8%;
+.app{
+    width:100%;
+    height:100vh;
 
-    border-top:1px solid #170000;
+    display:flex;
+}
 
-    text-align:center;
+/* =========================
+   SIDEBAR
+========================= */
 
-    color:#292929;
+.sidebar{
+    width:260px;
 
-    font-size:8px;
+    border-right:1px solid rgba(255,255,255,.07);
+
+    background:rgba(5,6,8,.65);
+
+    backdrop-filter:blur(25px);
+
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-weight:800;
+    font-size:20px;
+
+    margin-bottom:35px;
+}
+
+.logo-icon{
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d5cff,
+            #00bfff
+        );
+
+    box-shadow:
+        0 0 25px rgba(80,100,255,.35);
+}
+
+.new-chat{
+    border:1px solid rgba(255,255,255,.08);
+
+    background:rgba(255,255,255,.04);
+
+    color:#fff;
+
+    padding:13px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    transition:.25s;
+}
+
+.new-chat:hover{
+    background:rgba(255,255,255,.08);
+
+    transform:translateY(-2px);
+}
+
+.side-title{
+    margin-top:30px;
+
+    color:#666;
+
+    font-size:10px;
+
+    text-transform:uppercase;
 
     letter-spacing:2px;
 }
 
-footer span{
-    color:#650000;
+.status{
+    margin-top:auto;
+
+    padding:15px;
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.025);
+}
+
+.status-line{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:11px;
+
+    color:#aaa;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#32e875;
+
+    box-shadow:0 0 10px #32e875;
+
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+
+    50%{
+        opacity:.3;
+    }
+
+}
+
+/* =========================
+   CHAT
+========================= */
+
+.chat{
+    flex:1;
+
+    display:flex;
+    flex-direction:column;
+
+    min-width:0;
+}
+
+/* Header */
+
+.header{
+    height:75px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 35px;
+
+    border-bottom:1px solid rgba(255,255,255,.07);
+
+    background:rgba(5,6,8,.5);
+
+    backdrop-filter:blur(20px);
+}
+
+.ai-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.ai-avatar{
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d5cff,
+            #00bfff
+        );
+
+    box-shadow:
+        0 0 20px rgba(80,100,255,.3);
+}
+
+.ai-name{
+    font-weight:700;
+    font-size:14px;
+}
+
+.ai-state{
+    color:#666;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.header-button{
+    border:0;
+
+    background:rgba(255,255,255,.04);
+
+    color:#aaa;
+
+    width:35px;
+    height:35px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+/* =========================
+   MESAJLAR
+========================= */
+
+.messages{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:35px 8% 160px;
+
+    scroll-behavior:smooth;
+}
+
+.messages::-webkit-scrollbar{
+    width:5px;
+}
+
+.messages::-webkit-scrollbar-thumb{
+    background:#222;
+    border-radius:10px;
+}
+
+.message{
+    max-width:850px;
+
+    margin:0 auto 25px;
+
+    display:flex;
+
+    gap:14px;
+
+    animation:messageIn .35s ease;
+}
+
+@keyframes messageIn{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.avatar{
+    flex-shrink:0;
+
+    width:34px;
+    height:34px;
+
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:13px;
+}
+
+.ai .avatar{
+    background:
+        linear-gradient(
+            135deg,
+            #6d5cff,
+            #00bfff
+        );
+}
+
+.user .avatar{
+    background:#20232b;
+}
+
+.message-content{
+    flex:1;
+
+    min-width:0;
+}
+
+.message-name{
+    font-size:11px;
+
+    font-weight:700;
+
+    color:#888;
+
+    margin-bottom:7px;
+}
+
+.message-text{
+    color:#d8d8d8;
+
+    font-size:14px;
+
+    line-height:1.8;
+
+    white-space:pre-wrap;
+}
+
+.user .message-text{
+    color:#eee;
+}
+
+.copy{
+    margin-top:10px;
+
+    background:transparent;
+
+    border:0;
+
+    color:#555;
+
+    font-size:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.copy:hover{
+    color:#aaa;
+}
+
+/* Typing */
+
+.typing{
+    display:flex;
+    gap:5px;
+
+    padding:10px 0;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+
+    background:#777;
+
+    border-radius:50%;
+
+    animation:typing 1.2s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+
+    0%,60%,100%{
+        transform:translateY(0);
+        opacity:.4;
+    }
+
+    30%{
+        transform:translateY(-5px);
+        opacity:1;
+    }
+
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.input-area{
+    position:fixed;
+
+    bottom:0;
+    right:0;
+
+    width:calc(100% - 260px);
+
+    padding:25px 8% 30px;
+
+    background:
+        linear-gradient(
+            transparent,
+            #050608 35%
+        );
+
+    z-index:20;
+}
+
+.input-box{
+    max-width:850px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:flex-end;
+
+    gap:10px;
+
+    padding:10px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    border-radius:18px;
+
+    background:rgba(15,17,22,.88);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 15px 60px rgba(0,0,0,.45);
+
+    transition:.25s;
+}
+
+.input-box:focus-within{
+    border-color:rgba(100,90,255,.5);
+
+    box-shadow:
+        0 0 30px rgba(80,80,255,.08),
+        0 15px 60px rgba(0,0,0,.5);
+}
+
+textarea{
+    flex:1;
+
+    min-height:25px;
+    max-height:130px;
+
+    resize:none;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-family:Inter;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    padding:9px;
+}
+
+textarea::placeholder{
+    color:#555;
+}
+
+.send{
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6d5cff,
+            #00aeea
+        );
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.25s;
+
+    box-shadow:
+        0 0 20px rgba(80,100,255,.2);
+}
+
+.send:hover{
+    transform:scale(1.05);
+
+    box-shadow:
+        0 0 30px rgba(80,100,255,.45);
+}
+
+.send:active{
+    transform:scale(.95);
+}
+
+.disclaimer{
+    text-align:center;
+
+    margin-top:10px;
+
+    color:#3f4148;
+
+    font-size:9px;
 }
 
 /* =========================
    MOBİL
 ========================= */
 
-@media(max-width:900px){
+@media(max-width:800px){
 
-    .hero{
-        grid-template-columns:1fr;
-    }
-
-    .cards{
-        grid-template-columns:1fr 1fr;
-    }
-}
-
-@media(max-width:600px){
-
-    nav ul{
+    .sidebar{
         display:none;
     }
 
-    .hero{
-        padding:120px 6% 70px;
+    .header{
+        padding:0 18px;
     }
 
-    section{
-        padding:75px 6%;
+    .messages{
+        padding:25px 18px 150px;
     }
 
-    .cards{
-        grid-template-columns:1fr;
+    .input-area{
+        width:100%;
+
+        padding:
+            15px
+            15px
+            20px;
     }
 
-    .buttons{
-        flex-direction:column;
-    }
-
-    .btn{
-        text-align:center;
-    }
-
-    .creature{
-        min-height:430px;
-    }
-
-    .eye-container{
-        gap:50px;
-    }
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- ATMOSFER -->
-<div class="noise"></div>
-<div class="scanlines"></div>
-<div class="glitch-flash"></div>
-
-<div class="fog"></div>
-<div class="fog fog2"></div>
-
-<!-- KAN -->
-<div class="blood"></div>
-<div class="blood"></div>
-<div class="blood"></div>
-<div class="blood"></div>
-<div class="blood"></div>
-<div class="blood"></div>
-
-
-<!-- NAV -->
-
-<nav>
-
-<div class="logo">
-SHITRA
-<small>CLASSIFIED ENTITY</small>
-</div>
-
-<ul>
-<li><a href="#home">ANA DOSYA</a></li>
-<li><a href="#threat">TEHDİT</a></li>
-<li><a href="#profile">PROFİL</a></li>
-<li><a href="#terminal">KAYITLAR</a></li>
-</ul>
-
-</nav>
-
-
-<!-- HERO -->
-
-<section class="hero" id="home">
-
-<div>
-
-<div class="warning">
-⚠ EXTREME DANGER // DO NOT APPROACH
-</div>
-
-<h1>
-SHITRA
-</h1>
-
-<div class="subtitle">
-<span>BİLİNMİYOR</span> • TEHLİKELİ • AKTİF
-</div>
-
-<p class="description">
-
-Shitra, kökeni ve gerçek doğası bilinmeyen
-son derece tehlikeli bir varlıktır.
-
-<br><br>
-
-Görüldüğü bölgelerde elektronik sistemler
-bozulmakta, ışıklar kesilmekte ve çevredeki
-insanlar açıklanamayan sesler bildirmektedir.
-
-<br><br>
-
-Bazı kayıtlara göre Shitra'nın insanları
-uzaktan izlediği düşünülmektedir.
-
-</p>
-
-<div class="buttons">
-
-<a href="#profile" class="btn">
-GİZLİ DOSYAYI AÇ
-</a>
-
-<a href="#terminal" class="btn">
-SON KAYIT
-</a>
-
-</div>
-
+<div class="background">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="grid"></div>
 </div>
 
 
-<!-- CREATURE -->
+<div class="app">
 
-<div class="creature">
+    <!-- SIDEBAR -->
 
-<div class="face"></div>
+    <aside class="sidebar">
 
-<div class="eye-container">
+        <div class="logo">
 
-<div class="eye"></div>
-<div class="eye"></div>
+            <div class="logo-icon">
+                ✦
+            </div>
 
-</div>
+            NEXUS AI
 
-<div class="teeth">
+        </div>
 
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
-<div class="tooth"></div>
+        <button
+            class="new-chat"
+            onclick="newChat()">
 
-</div>
+            ＋ Yeni sohbet
 
-<div class="creature-name">
-SHITRA
-</div>
+        </button>
 
-</div>
+        <div class="side-title">
+            Sistem
+        </div>
 
-</section>
+        <div class="status">
 
+            <div class="status-line">
 
-<!-- THREAT -->
+                <span class="status-dot"></span>
 
-<section id="threat">
+                AI sistemi aktif
 
-<div class="label">
-THREAT ASSESSMENT
-</div>
+            </div>
 
-<div class="title">
-TEHDİT SEVİYESİ
-</div>
+        </div>
 
-<div class="cards">
-
-<div class="card">
-<div class="number">01</div>
-<h3>GÖRÜNMEZLİK</h3>
-<p>
-Varlığın karanlıkta fark edilmeden
-hareket edebildiği rapor edilmiştir.
-</p>
-</div>
-
-<div class="card">
-<div class="number">02</div>
-<h3>TAKİP</h3>
-<p>
-Shitra'nın hedeflerini uzun süre
-uzaktan izlediğine dair kayıtlar vardır.
-</p>
-</div>
-
-<div class="card">
-<div class="number">03</div>
-<h3>ÖNGÖRÜLEMEZ</h3>
-<p>
-Davranışları tahmin edilemez.
-Standart güvenlik protokolleri yetersizdir.
-</p>
-</div>
-
-</div>
-
-</section>
+    </aside>
 
 
-<!-- PROFILE -->
+    <!-- CHAT -->
 
-<section id="profile">
+    <main class="chat">
 
-<div class="label">
-CLASSIFIED DATABASE
-</div>
+        <header class="header">
 
-<div class="title">
-VARLIK DOSYASI
-</div>
+            <div class="ai-info">
 
-<div class="file">
+                <div class="ai-avatar">
+                    ✦
+                </div>
 
-<div class="row">
-<span>VARLIK</span>
-<span class="red">SHITRA</span>
-</div>
+                <div>
 
-<div class="row">
-<span>TÜR</span>
-<span>BİLİNMİYOR</span>
-</div>
+                    <div class="ai-name">
+                        Nexus
+                    </div>
 
-<div class="row">
-<span>TEHDİT</span>
-<span class="red">EXTREME</span>
-</div>
+                    <div class="ai-state">
+                        Yapay zekâ asistanı • Çevrimiçi
+                    </div>
 
-<div class="row">
-<span>AKTİVİTE</span>
-<span class="red">AKTİF</span>
-</div>
+                </div>
 
-<div class="row">
-<span>ZEKA</span>
-<span>TESPİT EDİLEMEDİ</span>
-</div>
+            </div>
 
-<div class="row">
-<span>KONUM</span>
-<span>BİLİNMİYOR</span>
-</div>
+            <button
+                class="header-button"
+                onclick="newChat()">
 
-<div class="row">
-<span>SON GÖRÜLME</span>
-<span class="red">[VERİ SİLİNDİ]</span>
-</div>
+                ↻
 
-<div class="row">
-<span>İLETİŞİM</span>
-<span class="red">KESİNLİKLE YASAK</span>
-</div>
+            </button>
+
+        </header>
+
+
+        <div
+            class="messages"
+            id="messages">
+
+            <!-- İlk mesaj -->
+
+            <div class="message ai">
+
+                <div class="avatar">
+                    ✦
+                </div>
+
+                <div class="message-content">
+
+                    <div class="message-name">
+                        NEXUS
+                    </div>
+
+                    <div class="message-text">
+Merhaba. Ben Nexus AI.
+
+Sorularını cevaplayabilir, fikir üretebilir, kod yazabilir veya herhangi bir konuda sana yardımcı olabilirim.
+
+Ne yapmak istiyorsun?
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
 
-</section>
 
+<!-- INPUT -->
 
-<!-- TERMINAL -->
+<div class="input-area">
 
-<section id="terminal">
+    <div class="input-box">
 
-<div class="label">
-RECOVERED TERMINAL LOG
-</div>
+        <textarea
+            id="input"
+            rows="1"
+            placeholder="Nexus'a bir şey sor..."
+            onkeydown="handleKey(event)"
+        ></textarea>
 
-<div class="title">
-SON KAYIT
-</div>
+        <button
+            class="send"
+            onclick="sendMessage()">
 
-<div class="terminal">
+            ➤
 
-<div class="terminal-head">
-security@unknown-archive : /shitra.log
-</div>
+        </button>
 
-<div class="terminal-body">
+    </div>
 
-<div>
-<span class="green">
-security@archive
-</span>:
-<span class="redtext">~</span>$
-open shitra.log
-</div>
-
-<br>
-
-<div class="gray">
-Decrypting file...
-</div>
-
-<div class="gray">
-Decrypting █████████████████
-</div>
-
-<br>
-
-<div class="redtext">
-WARNING: ENTITY DETECTED
-</div>
-
-<br>
-
-<div>
-ENTITY:
-<span class="white">SHITRA</span>
-</div>
-
-<div>
-STATUS:
-<span class="redtext">ACTIVE</span>
-</div>
-
-<div>
-DISTANCE:
-<span class="redtext">UNKNOWN</span>
-</div>
-
-<div>
-THREAT:
-<span class="redtext">EXTREME</span>
-</div>
-
-<br>
-
-<div class="gray">
-[02:13:44] Lights disabled.
-</div>
-
-<div class="gray">
-[02:13:49] Camera signal lost.
-</div>
-
-<div class="gray">
-[02:13:51] Unknown movement detected.
-</div>
-
-<div class="gray">
-[02:13:54] Audio corrupted.
-</div>
-
-<br>
-
-<div class="redtext">
-[02:13:57] IT IS BEHIND YOU.
-</div>
-
-<br>
-
-<div class="redtext">
-CONNECTION TERMINATED.
-</div>
+    <div class="disclaimer">
+        Nexus AI bazen hatalı cevap verebilir. Önemli bilgileri doğrulayın.
+    </div>
 
 </div>
-
-</div>
-
-</section>
-
-
-<!-- FINAL -->
-
-<section>
-
-<div class="final-warning">
-
-<h2>
-DON'T LOOK BACK
-</h2>
-
-<p>
-Eğer bu dosyayı görüntülerken arkanızdan
-bir ses geldiğini duyarsanız...
-
-<br><br>
-
-<span style="color:#850000">
-DOSYAYI KAPATMAYIN.
-</span>
-
-<br><br>
-
-Çünkü Shitra'nın sizi izleyip izlemediğini
-artık bilemezsiniz.
-</p>
-
-</div>
-
-</section>
-
-
-<footer>
-
-<span>SHITRA</span>
-//
-CLASSIFIED ENTITY DATABASE
-
-<br><br>
-
-UNAUTHORIZED ACCESS DETECTED
-
-</footer>
 
 
 <script>
 
 /* =========================
-   GÖZLER FAREYİ TAKİP ETSİN
+   ELEMENTLER
 ========================= */
 
-const eyes=document.querySelectorAll(".eye");
+const input =
+document.getElementById("input");
 
-document.addEventListener("mousemove",(e)=>{
-
-    const mouseX=e.clientX;
-    const mouseY=e.clientY;
-
-    eyes.forEach(eye=>{
-
-        const rect=eye.getBoundingClientRect();
-
-        const eyeX=rect.left+rect.width/2;
-        const eyeY=rect.top+rect.height/2;
-
-        const angle=Math.atan2(
-            mouseY-eyeY,
-            mouseX-eyeX
-        );
-
-        const distance=Math.min(
-            8,
-            Math.hypot(
-                mouseX-eyeX,
-                mouseY-eyeY
-            )/40
-        );
-
-        const x=Math.cos(angle)*distance;
-        const y=Math.sin(angle)*distance;
-
-        eye.style.transform=
-            `translate(${x}px,${y}px)`;
-
-    });
-
-});
+const messages =
+document.getElementById("messages");
 
 
 /* =========================
-   RASTGELE EKRAN GLITCH
+   ENTER
 ========================= */
 
-setInterval(()=>{
+function handleKey(event){
 
-    if(Math.random()<0.25){
+    if(event.key === "Enter" && !event.shiftKey){
 
-        document.body.style.transform=
-            `translate(${Math.random()*4-2}px,
-             ${Math.random()*4-2}px)`;
+        event.preventDefault();
 
-        setTimeout(()=>{
-
-            document.body.style.transform="";
-
-        },80);
+        sendMessage();
 
     }
 
-},1200);
+}
 
 
 /* =========================
-   TERMINAL İMLECİ
+   MESAJ EKLE
 ========================= */
 
-const terminal=
-document.querySelector(".terminal-body");
+function addMessage(text,type){
 
-setInterval(()=>{
+    const message =
+    document.createElement("div");
 
-    terminal.style.opacity=
-        terminal.style.opacity==="0.7"
-        ?"1"
-        :".7";
+    message.className =
+        "message " + type;
 
-},900);
+    const avatar =
+        type === "ai" ? "✦" : "●";
+
+    const name =
+        type === "ai" ? "NEXUS" : "SEN";
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            ${avatar}
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-name">
+                ${name}
+            </div>
+
+            <div class="message-text">
+                ${escapeHtml(text)}
+            </div>
+
+            ${
+                type === "ai"
+                ?
+                `<button
+                    class="copy"
+                    onclick="copyText(this)">
+                    Kopyala
+                </button>`
+                :
+                ""
+            }
+
+        </div>
+
+    `;
+
+    messages.appendChild(message);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
 
 
 /* =========================
-   SAYFA AÇILIŞI
+   GÜVENLİ HTML
 ========================= */
 
-window.addEventListener("load",()=>{
+function escapeHtml(text){
 
-    document.body.style.opacity="0";
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   TYPING
+========================= */
+
+function showTyping(){
+
+    const typing =
+    document.createElement("div");
+
+    typing.className =
+        "message ai";
+
+    typing.id =
+        "typing";
+
+    typing.innerHTML = `
+
+        <div class="avatar">
+            ✦
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-name">
+                NEXUS
+            </div>
+
+            <div class="typing">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        </div>
+
+    `;
+
+    messages.appendChild(typing);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* =========================
+   DEMO AI
+========================= */
+
+function getAIResponse(text){
+
+    const lower =
+        text.toLowerCase();
+
+    if(
+        lower.includes("merhaba") ||
+        lower.includes("selam")
+    ){
+
+        return "Merhaba! 👋 Ben Nexus. Bugün sana nasıl yardımcı olabilirim?";
+
+    }
+
+    if(lower.includes("nasılsın")){
+
+        return "Gayet iyiyim. Sistemlerim aktif ve senin mesajını bekliyorum. ⚡";
+
+    }
+
+    if(lower.includes("kimsin")){
+
+        return "Ben Nexus AI. Kodlama, fikir üretme, yazı yazma ve çeşitli konularda yardımcı olmak için tasarlanmış bir yapay zekâ asistanıyım.";
+
+    }
+
+    if(lower.includes("html")){
+
+        return "HTML, web sayfalarının yapısını oluşturmak için kullanılan işaretleme dilidir. İstersen sana sıfırdan modern bir HTML sitesi de oluşturabilirim.";
+
+    }
+
+    if(
+        lower.includes("javascript") ||
+        lower.includes("js")
+    ){
+
+        return "JavaScript ile sitene animasyonlar, butonlar, etkileşimler ve çok daha fazlasını ekleyebilirsin. İstersen istediğin özelliği birlikte kodlayabiliriz.";
+
+    }
+
+    if(lower.includes("github")){
+
+        return "GitHub Pages sayesinde HTML, CSS ve JavaScript siteni ücretsiz şekilde yayınlayabilirsin. Örneğin kullanıcıadın.github.io/site/ şeklinde erişilebilir.";
+
+    }
+
+    if(lower.includes("gta")){
+
+        return "GTA World için karakter hikâyesi, RP konsepti, karakter geçmişi veya başvuru metni hazırlamana yardımcı olabilirim.";
+
+    }
+
+    if(lower.includes("shitra")){
+
+        return "Shitra... İlginç. 👁️ Bu ismi daha önce gördüğüm en normal isimlerden biri sayamam. İstersen Shitra için korku temalı bir karakter veya hikâye oluşturabiliriz.";
+
+    }
+
+    if(
+        lower.includes("kod") ||
+        lower.includes("site")
+    ){
+
+        return "Tabii. Ne yapmak istediğini söyle; HTML, CSS ve JavaScript kullanarak modern bir arayüz tasarlayabiliriz.";
+
+    }
+
+    const answers = [
+
+        "Bunu anladım. Biraz daha detay verirsen sana daha iyi yardımcı olabilirim.",
+
+        "İlginç bir soru. Bunu birkaç farklı şekilde ele alabiliriz.",
+
+        "Bunun üzerinde çalışabiliriz. İstersen adım adım ilerleyelim.",
+
+        "Anladım. Bana hedefini söyle, gerisini birlikte tasarlayalım.",
+
+        "Bunu yapmana yardımcı olabilirim. Ne elde etmek istediğini biraz daha anlat."
+
+    ];
+
+    return answers[
+        Math.floor(
+            Math.random()*answers.length
+        )
+    ];
+
+}
+
+
+/* =========================
+   MESAJ GÖNDER
+========================= */
+
+function sendMessage(){
+
+    const text =
+        input.value.trim();
+
+    if(!text) return;
+
+    addMessage(
+        text,
+        "user"
+    );
+
+    input.value="";
+
+    input.style.height="auto";
+
+    showTyping();
 
     setTimeout(()=>{
 
-        document.body.style.transition=
-            "opacity 2s";
+        const typing =
+            document.getElementById("typing");
 
-        document.body.style.opacity="1";
+        if(typing)
+            typing.remove();
 
-    },150);
+        const response =
+            getAIResponse(text);
 
-});
+        addMessage(
+            response,
+            "ai"
+        );
+
+    },700 + Math.random()*900);
+
+}
 
 
 /* =========================
-   RASTGELE KIRMIZI FLAŞ
+   KOPYALA
 ========================= */
 
-setInterval(()=>{
+function copyText(button){
 
-    if(Math.random()<0.12){
+    const text =
+        button
+        .parentElement
+        .querySelector(".message-text")
+        .innerText;
 
-        document.querySelector(
-            ".glitch-flash"
-        ).style.opacity=".7";
+    navigator.clipboard.writeText(text);
 
-        setTimeout(()=>{
+    button.innerText =
+        "Kopyalandı ✓";
 
-            document.querySelector(
-                ".glitch-flash"
-            ).style.opacity="0";
+    setTimeout(()=>{
 
-        },70);
+        button.innerText =
+            "Kopyala";
+
+    },1500);
+
+}
+
+
+/* =========================
+   YENİ SOHBET
+========================= */
+
+function newChat(){
+
+    messages.innerHTML = `
+
+        <div class="message ai">
+
+            <div class="avatar">
+                ✦
+            </div>
+
+            <div class="message-content">
+
+                <div class="message-name">
+                    NEXUS
+                </div>
+
+                <div class="message-text">
+Yeni sohbet başlatıldı.
+
+Ben hazırım. Ne hakkında konuşmak istiyorsun?
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   TEXTAREA OTOMATİK BOY
+========================= */
+
+input.addEventListener(
+    "input",
+    function(){
+
+        this.style.height =
+            "auto";
+
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                130
+            ) + "px";
 
     }
-
-},1000);
+);
 
 </script>
 
