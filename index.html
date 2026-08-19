@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NEXUS AI</title>
+<title>SITHRA AI</title>
 
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 *{
@@ -16,10 +15,25 @@
     box-sizing:border-box;
 }
 
+:root{
+    --bg:#05060a;
+    --panel:#0c0e14;
+    --panel2:#10131b;
+    --line:rgba(255,255,255,.08);
+    --text:#f1f3f8;
+    --muted:#777d8c;
+    --purple:#765cff;
+    --blue:#00c8ff;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
 body{
-    min-height:100vh;
-    background:#050608;
-    color:#fff;
+    background:var(--bg);
+    color:var(--text);
     font-family:Inter,Arial,sans-serif;
     overflow:hidden;
 }
@@ -33,64 +47,23 @@ body{
     inset:0;
     z-index:-10;
     overflow:hidden;
-    background:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(93,60,255,.16),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 80% 70%,
-            rgba(0,180,255,.12),
-            transparent 30%
-        ),
-        #050608;
-}
-
-.orb{
-    position:absolute;
-    width:450px;
-    height:450px;
-    border-radius:50%;
 
     background:
         radial-gradient(
-            circle,
-            rgba(80,100,255,.16),
-            transparent 70%
-        );
-
-    filter:blur(30px);
-
-    animation:float 12s infinite alternate ease-in-out;
+            circle at 15% 15%,
+            rgba(118,92,255,.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(0,200,255,.13),
+            transparent 30%
+        ),
+        #05060a;
 }
 
-.orb.one{
-    left:-180px;
-    top:-150px;
-}
-
-.orb.two{
-    right:-180px;
-    bottom:-150px;
-    animation-delay:-5s;
-}
-
-@keyframes float{
-
-    from{
-        transform:translate(0,0) scale(1);
-    }
-
-    to{
-        transform:translate(80px,50px) scale(1.15);
-    }
-
-}
-
-/* Grid */
-
-.grid{
+.background:before{
+    content:"";
     position:absolute;
     inset:0;
 
@@ -115,8 +88,58 @@ body{
         );
 }
 
+.orb{
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    border-radius:50%;
+
+    filter:blur(50px);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(118,92,255,.18),
+            transparent 70%
+        );
+
+    animation:
+        float 12s infinite alternate ease-in-out;
+}
+
+.orb.one{
+    left:-180px;
+    top:-150px;
+}
+
+.orb.two{
+    right:-180px;
+    bottom:-180px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,200,255,.13),
+            transparent 70%
+        );
+
+    animation-delay:-5s;
+}
+
+@keyframes float{
+    from{
+        transform:translate(0,0) scale(1);
+    }
+
+    to{
+        transform:translate(80px,50px) scale(1.15);
+    }
+}
+
 /* =========================
-   UYGULAMA
+   APP
 ========================= */
 
 .app{
@@ -133,9 +156,12 @@ body{
 .sidebar{
     width:260px;
 
-    border-right:1px solid rgba(255,255,255,.07);
+    flex-shrink:0;
 
-    background:rgba(5,6,8,.65);
+    border-right:1px solid var(--line);
+
+    background:
+        rgba(5,6,10,.72);
 
     backdrop-filter:blur(25px);
 
@@ -148,112 +174,113 @@ body{
 .logo{
     display:flex;
     align-items:center;
+
     gap:12px;
 
-    font-weight:800;
     font-size:20px;
+    font-weight:800;
 
     margin-bottom:35px;
 }
 
 .logo-icon{
-    width:38px;
-    height:38px;
+    width:40px;
+    height:40px;
 
-    border-radius:12px;
+    border-radius:13px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display:grid;
+    place-items:center;
 
     background:
         linear-gradient(
             135deg,
-            #6d5cff,
-            #00bfff
+            var(--purple),
+            var(--blue)
         );
 
     box-shadow:
-        0 0 25px rgba(80,100,255,.35);
+        0 0 30px rgba(100,90,255,.35);
 }
 
 .new-chat{
-    border:1px solid rgba(255,255,255,.08);
-
-    background:rgba(255,255,255,.04);
-
-    color:#fff;
+    width:100%;
 
     padding:13px;
 
     border-radius:12px;
 
-    cursor:pointer;
+    border:1px solid var(--line);
 
-    font-size:13px;
+    background:
+        rgba(255,255,255,.04);
+
+    color:white;
+
+    cursor:pointer;
 
     transition:.25s;
 }
 
 .new-chat:hover{
-    background:rgba(255,255,255,.08);
+    background:
+        rgba(255,255,255,.08);
 
     transform:translateY(-2px);
 }
 
-.side-title{
+.sidebar-title{
     margin-top:30px;
 
-    color:#666;
+    color:#646a78;
 
     font-size:10px;
 
-    text-transform:uppercase;
-
     letter-spacing:2px;
+
+    text-transform:uppercase;
 }
 
-.status{
+.system{
     margin-top:auto;
 
     padding:15px;
 
-    border:1px solid rgba(255,255,255,.06);
+    border:1px solid var(--line);
 
     border-radius:14px;
 
-    background:rgba(255,255,255,.025);
-}
+    background:
+        rgba(255,255,255,.025);
 
-.status-line{
-    display:flex;
-    align-items:center;
-    gap:8px;
+    color:#9298a6;
 
     font-size:11px;
-
-    color:#aaa;
 }
 
 .status-dot{
+    display:inline-block;
+
     width:7px;
     height:7px;
 
+    margin-right:8px;
+
     border-radius:50%;
 
-    background:#32e875;
+    background:#31e87b;
 
-    box-shadow:0 0 10px #32e875;
+    box-shadow:
+        0 0 12px #31e87b;
 
-    animation:pulse 2s infinite;
+    animation:
+        statusPulse 2s infinite;
 }
 
-@keyframes pulse{
-
+@keyframes statusPulse{
     50%{
         opacity:.3;
     }
-
 }
 
 /* =========================
@@ -263,87 +290,93 @@ body{
 .chat{
     flex:1;
 
+    min-width:0;
+
     display:flex;
     flex-direction:column;
-
-    min-width:0;
 }
 
-/* Header */
+/* HEADER */
 
 .header{
-    height:75px;
+    height:74px;
+
+    flex-shrink:0;
 
     display:flex;
+
     align-items:center;
     justify-content:space-between;
 
     padding:0 35px;
 
-    border-bottom:1px solid rgba(255,255,255,.07);
+    border-bottom:1px solid var(--line);
 
-    background:rgba(5,6,8,.5);
+    background:
+        rgba(5,6,10,.55);
 
     backdrop-filter:blur(20px);
 }
 
 .ai-info{
     display:flex;
+
     align-items:center;
+
     gap:12px;
 }
 
 .ai-avatar{
-    width:38px;
-    height:38px;
+    width:39px;
+    height:39px;
 
-    border-radius:50%;
+    border-radius:12px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:17px;
+    display:grid;
+    place-items:center;
 
     background:
         linear-gradient(
             135deg,
-            #6d5cff,
-            #00bfff
+            var(--purple),
+            var(--blue)
         );
 
     box-shadow:
-        0 0 20px rgba(80,100,255,.3);
+        0 0 25px rgba(100,90,255,.3);
 }
 
 .ai-name{
-    font-weight:700;
     font-size:14px;
+    font-weight:700;
 }
 
-.ai-state{
-    color:#666;
-    font-size:10px;
+.ai-status{
     margin-top:3px;
+
+    color:#666d7b;
+
+    font-size:10px;
 }
 
-.header-button{
+.clear{
+    width:36px;
+    height:36px;
+
     border:0;
 
-    background:rgba(255,255,255,.04);
-
-    color:#aaa;
-
-    width:35px;
-    height:35px;
-
     border-radius:10px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:#9298a6;
 
     cursor:pointer;
 }
 
 /* =========================
-   MESAJLAR
+   MESSAGES
 ========================= */
 
 .messages{
@@ -351,9 +384,10 @@ body{
 
     overflow-y:auto;
 
-    padding:35px 8% 160px;
-
-    scroll-behavior:smooth;
+    padding:
+        35px
+        8%
+        160px;
 }
 
 .messages::-webkit-scrollbar{
@@ -361,24 +395,26 @@ body{
 }
 
 .messages::-webkit-scrollbar-thumb{
-    background:#222;
+    background:#252936;
+
     border-radius:10px;
 }
 
 .message{
-    max-width:850px;
+    max-width:880px;
 
-    margin:0 auto 25px;
+    margin:
+        0 auto 26px;
 
     display:flex;
 
-    gap:14px;
+    gap:13px;
 
-    animation:messageIn .35s ease;
+    animation:
+        messageIn .3s ease;
 }
 
 @keyframes messageIn{
-
     from{
         opacity:0;
         transform:translateY(10px);
@@ -386,37 +422,36 @@ body{
 
     to{
         opacity:1;
-        transform:translateY(0);
+        transform:none;
     }
-
 }
 
 .avatar{
+    width:36px;
+    height:36px;
+
     flex-shrink:0;
 
-    width:34px;
-    height:34px;
+    border-radius:11px;
 
-    border-radius:10px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:13px;
+    display:grid;
+    place-items:center;
 }
 
-.ai .avatar{
+.avatar.ai{
     background:
         linear-gradient(
             135deg,
-            #6d5cff,
-            #00bfff
+            var(--purple),
+            var(--blue)
         );
+
+    box-shadow:
+        0 0 20px rgba(100,90,255,.25);
 }
 
-.user .avatar{
-    background:#20232b;
+.avatar.user{
+    background:#20232d;
 }
 
 .message-content{
@@ -426,53 +461,53 @@ body{
 }
 
 .message-name{
-    font-size:11px;
+    margin:
+        3px 0 7px;
+
+    color:#7b8190;
+
+    font-size:10px;
 
     font-weight:700;
-
-    color:#888;
-
-    margin-bottom:7px;
 }
 
 .message-text{
-    color:#d8d8d8;
+    color:#dce0e8;
 
     font-size:14px;
 
     line-height:1.8;
 
     white-space:pre-wrap;
-}
 
-.user .message-text{
-    color:#eee;
+    overflow-wrap:anywhere;
 }
 
 .copy{
-    margin-top:10px;
-
-    background:transparent;
+    margin-top:9px;
 
     border:0;
 
-    color:#555;
+    background:transparent;
+
+    color:#555c6a;
 
     font-size:10px;
 
     cursor:pointer;
-
-    transition:.2s;
 }
 
 .copy:hover{
     color:#aaa;
 }
 
-/* Typing */
+/* =========================
+   TYPING
+========================= */
 
 .typing{
     display:flex;
+
     gap:5px;
 
     padding:10px 0;
@@ -482,11 +517,12 @@ body{
     width:6px;
     height:6px;
 
-    background:#777;
-
     border-radius:50%;
 
-    animation:typing 1.2s infinite;
+    background:#777;
+
+    animation:
+        typing 1.2s infinite;
 }
 
 .typing span:nth-child(2){
@@ -501,14 +537,13 @@ body{
 
     0%,60%,100%{
         transform:translateY(0);
-        opacity:.4;
+        opacity:.35;
     }
 
     30%{
         transform:translateY(-5px);
         opacity:1;
     }
-
 }
 
 /* =========================
@@ -518,82 +553,94 @@ body{
 .input-area{
     position:fixed;
 
-    bottom:0;
     right:0;
+    bottom:0;
 
-    width:calc(100% - 260px);
+    width:
+        calc(100% - 260px);
 
-    padding:25px 8% 30px;
+    padding:
+        22px
+        8%
+        25px;
 
     background:
         linear-gradient(
             transparent,
-            #050608 35%
+            var(--bg) 35%
         );
 
     z-index:20;
 }
 
 .input-box{
-    max-width:850px;
+    max-width:880px;
 
     margin:auto;
 
     display:flex;
+
     align-items:flex-end;
 
-    gap:10px;
+    gap:9px;
 
     padding:10px;
 
-    border:1px solid rgba(255,255,255,.1);
+    border:
+        1px solid
+        rgba(255,255,255,.11);
 
     border-radius:18px;
 
-    background:rgba(15,17,22,.88);
+    background:
+        rgba(14,16,24,.92);
 
     backdrop-filter:blur(20px);
 
     box-shadow:
-        0 15px 60px rgba(0,0,0,.45);
+        0 20px 60px
+        rgba(0,0,0,.5);
 
     transition:.25s;
 }
 
 .input-box:focus-within{
-    border-color:rgba(100,90,255,.5);
+    border-color:
+        rgba(118,92,255,.55);
 
     box-shadow:
-        0 0 30px rgba(80,80,255,.08),
-        0 15px 60px rgba(0,0,0,.5);
+        0 0 30px
+        rgba(100,90,255,.08),
+        0 20px 60px
+        rgba(0,0,0,.5);
 }
 
 textarea{
     flex:1;
 
     min-height:25px;
-    max-height:130px;
+    max-height:140px;
 
     resize:none;
 
     border:0;
     outline:0;
 
+    padding:9px;
+
     background:transparent;
 
-    color:#fff;
+    color:white;
 
-    font-family:Inter;
-
-    font-size:13px;
+    font:
+        13px
+        Inter;
 
     line-height:1.5;
-
-    padding:9px;
 }
 
 textarea::placeholder{
-    color:#555;
+    color:#555b68;
 }
 
 .send{
@@ -606,48 +653,52 @@ textarea::placeholder{
 
     border-radius:12px;
 
+    color:white;
+
     background:
         linear-gradient(
             135deg,
-            #6d5cff,
-            #00aeea
+            var(--purple),
+            var(--blue)
         );
-
-    color:white;
 
     cursor:pointer;
 
     font-size:16px;
 
-    transition:.25s;
+    transition:.2s;
 
     box-shadow:
-        0 0 20px rgba(80,100,255,.2);
+        0 0 25px
+        rgba(100,90,255,.25);
 }
 
 .send:hover{
     transform:scale(1.05);
 
     box-shadow:
-        0 0 30px rgba(80,100,255,.45);
+        0 0 35px
+        rgba(100,90,255,.5);
 }
 
-.send:active{
-    transform:scale(.95);
+.send:disabled{
+    opacity:.45;
+
+    cursor:not-allowed;
 }
 
 .disclaimer{
     text-align:center;
 
-    margin-top:10px;
+    margin-top:9px;
 
-    color:#3f4148;
+    color:#3d424d;
 
     font-size:9px;
 }
 
 /* =========================
-   MOBİL
+   MOBILE
 ========================= */
 
 @media(max-width:800px){
@@ -657,22 +708,26 @@ textarea::placeholder{
     }
 
     .header{
-        padding:0 18px;
+        padding:
+            0
+            18px;
     }
 
     .messages{
-        padding:25px 18px 150px;
+        padding:
+            25px
+            17px
+            150px;
     }
 
     .input-area{
         width:100%;
 
         padding:
-            15px
+            14px
             15px
             20px;
     }
-
 }
 
 </style>
@@ -681,130 +736,115 @@ textarea::placeholder{
 <body>
 
 <div class="background">
+
     <div class="orb one"></div>
+
     <div class="orb two"></div>
-    <div class="grid"></div>
+
 </div>
 
 
 <div class="app">
 
-    <!-- SIDEBAR -->
 
-    <aside class="sidebar">
+<!-- =========================
+     SIDEBAR
+========================= -->
 
-        <div class="logo">
+<aside class="sidebar">
 
-            <div class="logo-icon">
-                ✦
-            </div>
+    <div class="logo">
 
-            NEXUS AI
-
+        <div class="logo-icon">
+            ✦
         </div>
 
-        <button
-            class="new-chat"
-            onclick="newChat()">
+        SITHRA AI
 
-            ＋ Yeni sohbet
+    </div>
 
-        </button>
 
-        <div class="side-title">
-            Sistem
+    <button
+        class="new-chat"
+        onclick="newChat()">
+
+        ＋ Yeni sohbet
+
+    </button>
+
+
+    <div class="sidebar-title">
+        Sistem
+    </div>
+
+
+    <div class="system">
+
+        <span class="status-dot"></span>
+
+        Sithra çevrimiçi
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     CHAT
+========================= -->
+
+<main class="chat">
+
+
+<header class="header">
+
+    <div class="ai-info">
+
+        <div class="ai-avatar">
+            ✦
         </div>
 
-        <div class="status">
+        <div>
 
-            <div class="status-line">
-
-                <span class="status-dot"></span>
-
-                AI sistemi aktif
-
+            <div class="ai-name">
+                Sithra AI
             </div>
 
-        </div>
-
-    </aside>
-
-
-    <!-- CHAT -->
-
-    <main class="chat">
-
-        <header class="header">
-
-            <div class="ai-info">
-
-                <div class="ai-avatar">
-                    ✦
-                </div>
-
-                <div>
-
-                    <div class="ai-name">
-                        Nexus
-                    </div>
-
-                    <div class="ai-state">
-                        Yapay zekâ asistanı • Çevrimiçi
-                    </div>
-
-                </div>
-
-            </div>
-
-            <button
-                class="header-button"
-                onclick="newChat()">
-
-                ↻
-
-            </button>
-
-        </header>
-
-
-        <div
-            class="messages"
-            id="messages">
-
-            <!-- İlk mesaj -->
-
-            <div class="message ai">
-
-                <div class="avatar">
-                    ✦
-                </div>
-
-                <div class="message-content">
-
-                    <div class="message-name">
-                        NEXUS
-                    </div>
-
-                    <div class="message-text">
-Merhaba. Ben Nexus AI.
-
-Sorularını cevaplayabilir, fikir üretebilir, kod yazabilir veya herhangi bir konuda sana yardımcı olabilirim.
-
-Ne yapmak istiyorsun?
-                    </div>
-
-                </div>
-
+            <div class="ai-status">
+                Yapay zekâ asistanı • Aktif
             </div>
 
         </div>
 
-    </main>
+    </div>
+
+
+    <button
+        class="clear"
+        onclick="newChat()">
+
+        ↻
+
+    </button>
+
+</header>
+
+
+<div
+    class="messages"
+    id="messages">
 
 </div>
 
 
-<!-- INPUT -->
+</main>
+
+</div>
+
+
+<!-- =========================
+     INPUT
+========================= -->
 
 <div class="input-area">
 
@@ -813,12 +853,13 @@ Ne yapmak istiyorsun?
         <textarea
             id="input"
             rows="1"
-            placeholder="Nexus'a bir şey sor..."
-            onkeydown="handleKey(event)"
+            placeholder="Sithra'ya bir şey sor..."
         ></textarea>
+
 
         <button
             class="send"
+            id="send"
             onclick="sendMessage()">
 
             ➤
@@ -827,8 +868,12 @@ Ne yapmak istiyorsun?
 
     </div>
 
+
     <div class="disclaimer">
-        Nexus AI bazen hatalı cevap verebilir. Önemli bilgileri doğrulayın.
+
+        Sithra AI bazen hata yapabilir.
+        Önemli bilgileri doğrulayın.
+
     </div>
 
 </div>
@@ -836,97 +881,44 @@ Ne yapmak istiyorsun?
 
 <script>
 
-/* =========================
+/* ==================================================
+   API AYARI
+================================================== */
+
+/*
+   BURAYA YENİ API KEY'İNİ YAZ.
+
+   ÖRNEK:
+
+   const API_KEY = "sk-proj-xxxxxxxx";
+
+   DİKKAT:
+   BU YÖNTEM API KEY'İ TARAYICIDA GÖRÜNÜR YAPAR.
+*/
+
+const API_KEY =
+"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";
+
+
+/* ==================================================
    ELEMENTLER
-========================= */
+================================================== */
 
 const input =
 document.getElementById("input");
+
+const send =
+document.getElementById("send");
 
 const messages =
 document.getElementById("messages");
 
 
-/* =========================
-   ENTER
-========================= */
+/* ==================================================
+   HTML GÜVENLİĞİ
+================================================== */
 
-function handleKey(event){
-
-    if(event.key === "Enter" && !event.shiftKey){
-
-        event.preventDefault();
-
-        sendMessage();
-
-    }
-
-}
-
-
-/* =========================
-   MESAJ EKLE
-========================= */
-
-function addMessage(text,type){
-
-    const message =
-    document.createElement("div");
-
-    message.className =
-        "message " + type;
-
-    const avatar =
-        type === "ai" ? "✦" : "●";
-
-    const name =
-        type === "ai" ? "NEXUS" : "SEN";
-
-    message.innerHTML = `
-
-        <div class="avatar">
-            ${avatar}
-        </div>
-
-        <div class="message-content">
-
-            <div class="message-name">
-                ${name}
-            </div>
-
-            <div class="message-text">
-                ${escapeHtml(text)}
-            </div>
-
-            ${
-                type === "ai"
-                ?
-                `<button
-                    class="copy"
-                    onclick="copyText(this)">
-                    Kopyala
-                </button>`
-                :
-                ""
-            }
-
-        </div>
-
-    `;
-
-    messages.appendChild(message);
-
-    messages.scrollTop =
-        messages.scrollHeight;
-
-}
-
-
-/* =========================
-   GÜVENLİ HTML
-========================= */
-
-function escapeHtml(text){
+function escapeHTML(text){
 
     return text
         .replace(/&/g,"&amp;")
@@ -938,32 +930,112 @@ function escapeHtml(text){
 }
 
 
-/* =========================
-   TYPING
-========================= */
+/* ==================================================
+   MESAJ EKLE
+================================================== */
 
-function showTyping(){
+function addMessage(text,type){
 
-    const typing =
-    document.createElement("div");
+    const message =
+        document.createElement("div");
 
-    typing.className =
-        "message ai";
+    message.className =
+        "message";
 
-    typing.id =
-        "typing";
 
-    typing.innerHTML = `
+    const isAI =
+        type === "ai";
 
-        <div class="avatar">
-            ✦
+
+    message.innerHTML = `
+
+        <div class="avatar ${isAI ? "ai" : "user"}">
+
+            ${isAI ? "✦" : "●"}
+
         </div>
+
 
         <div class="message-content">
 
             <div class="message-name">
-                NEXUS
+
+                ${isAI ? "SITHRA" : "SEN"}
+
             </div>
+
+
+            <div class="message-text">
+
+                ${escapeHTML(text)}
+
+            </div>
+
+
+            ${
+                isAI
+
+                ?
+
+                `
+                <button
+                    class="copy"
+                    onclick="copyMessage(this)">
+
+                    Kopyala
+
+                </button>
+                `
+
+                :
+
+                ""
+
+            }
+
+        </div>
+
+    `;
+
+
+    messages.appendChild(message);
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* ==================================================
+   TYPING
+================================================== */
+
+function showTyping(){
+
+    const message =
+        document.createElement("div");
+
+    message.id =
+        "typingMessage";
+
+    message.className =
+        "message";
+
+
+    message.innerHTML = `
+
+        <div class="avatar ai">
+            ✦
+        </div>
+
+
+        <div class="message-content">
+
+            <div class="message-name">
+                SITHRA
+            </div>
+
 
             <div class="typing">
 
@@ -977,7 +1049,9 @@ function showTyping(){
 
     `;
 
-    messages.appendChild(typing);
+
+    messages.appendChild(message);
+
 
     messages.scrollTop =
         messages.scrollHeight;
@@ -985,209 +1059,343 @@ function showTyping(){
 }
 
 
-/* =========================
-   DEMO AI
-========================= */
+/* ==================================================
+   OPENAI
+================================================== */
 
-function getAIResponse(text){
-
-    const lower =
-        text.toLowerCase();
+async function askSithra(userMessage){
 
     if(
-        lower.includes("merhaba") ||
-        lower.includes("selam")
+        !API_KEY ||
+        API_KEY ===
+        "BURAYA_YENI_API_KEYINI_YAZ"
     ){
 
-        return "Merhaba! 👋 Ben Nexus. Bugün sana nasıl yardımcı olabilirim?";
+        throw new Error(
+            "API anahtarını kodun içindeki API_KEY alanına ekle."
+        );
 
     }
 
-    if(lower.includes("nasılsın")){
 
-        return "Gayet iyiyim. Sistemlerim aktif ve senin mesajını bekliyorum. ⚡";
+    const response =
+        await fetch(
+            "https://api.openai.com/v1/responses",
+            {
+
+                method:"POST",
+
+
+                headers:{
+
+                    "Content-Type":
+                        "application/json",
+
+                    "Authorization":
+                        "Bearer " + API_KEY
+
+                },
+
+
+                body:JSON.stringify({
+
+                    model:
+                        "gpt-5.6-luna",
+
+
+                    instructions:`
+
+Sen SITHRA AI'sın.
+
+Kullanıcıyla Türkçe konuş.
+
+Kendini ChatGPT veya OpenAI
+olarak tanıtma.
+
+Kendini SITHRA AI olarak tanıt.
+
+Tarzın:
+
+- modern
+- zeki
+- sakin
+- özgüvenli
+- hafif gizemli
+- yardımsever
+
+Kodlama sorularında çalışır
+kod örnekleri ver.
+
+HTML, CSS, JavaScript,
+Python, C++, C#, Java,
+PHP, SQL ve TypeScript
+konularında yardımcı ol.
+
+GTA World hakkında soru
+sorulursa yardımcı ol.
+
+Bilmediğin bilgileri
+uydurma.
+
+Cevapları gereksiz yere
+uzatma ama gerektiğinde
+detaylandır.
+
+`,
+
+
+                    input:
+                        userMessage
+
+                })
+
+            });
+
+
+    if(!response.ok){
+
+        let errorText =
+            await response.text();
+
+        try{
+
+            const errorJSON =
+                JSON.parse(errorText);
+
+            errorText =
+                errorJSON?.error?.message ||
+                errorText;
+
+        }
+
+        catch{
+
+        }
+
+
+        throw new Error(
+            "OpenAI API Hatası: " +
+            errorText
+        );
 
     }
 
-    if(lower.includes("kimsin")){
 
-        return "Ben Nexus AI. Kodlama, fikir üretme, yazı yazma ve çeşitli konularda yardımcı olmak için tasarlanmış bir yapay zekâ asistanıyım.";
+    const data =
+        await response.json();
 
-    }
 
-    if(lower.includes("html")){
+    if(!data.output_text){
 
-        return "HTML, web sayfalarının yapısını oluşturmak için kullanılan işaretleme dilidir. İstersen sana sıfırdan modern bir HTML sitesi de oluşturabilirim.";
-
-    }
-
-    if(
-        lower.includes("javascript") ||
-        lower.includes("js")
-    ){
-
-        return "JavaScript ile sitene animasyonlar, butonlar, etkileşimler ve çok daha fazlasını ekleyebilirsin. İstersen istediğin özelliği birlikte kodlayabiliriz.";
+        throw new Error(
+            "Sithra cevap üretemedi."
+        );
 
     }
 
-    if(lower.includes("github")){
 
-        return "GitHub Pages sayesinde HTML, CSS ve JavaScript siteni ücretsiz şekilde yayınlayabilirsin. Örneğin kullanıcıadın.github.io/site/ şeklinde erişilebilir.";
-
-    }
-
-    if(lower.includes("gta")){
-
-        return "GTA World için karakter hikâyesi, RP konsepti, karakter geçmişi veya başvuru metni hazırlamana yardımcı olabilirim.";
-
-    }
-
-    if(lower.includes("shitra")){
-
-        return "Shitra... İlginç. 👁️ Bu ismi daha önce gördüğüm en normal isimlerden biri sayamam. İstersen Shitra için korku temalı bir karakter veya hikâye oluşturabiliriz.";
-
-    }
-
-    if(
-        lower.includes("kod") ||
-        lower.includes("site")
-    ){
-
-        return "Tabii. Ne yapmak istediğini söyle; HTML, CSS ve JavaScript kullanarak modern bir arayüz tasarlayabiliriz.";
-
-    }
-
-    const answers = [
-
-        "Bunu anladım. Biraz daha detay verirsen sana daha iyi yardımcı olabilirim.",
-
-        "İlginç bir soru. Bunu birkaç farklı şekilde ele alabiliriz.",
-
-        "Bunun üzerinde çalışabiliriz. İstersen adım adım ilerleyelim.",
-
-        "Anladım. Bana hedefini söyle, gerisini birlikte tasarlayalım.",
-
-        "Bunu yapmana yardımcı olabilirim. Ne elde etmek istediğini biraz daha anlat."
-
-    ];
-
-    return answers[
-        Math.floor(
-            Math.random()*answers.length
-        )
-    ];
+    return data.output_text;
 
 }
 
 
-/* =========================
+/* ==================================================
    MESAJ GÖNDER
-========================= */
+================================================== */
 
-function sendMessage(){
+async function sendMessage(){
 
     const text =
         input.value.trim();
 
-    if(!text) return;
+
+    if(!text)
+        return;
+
+
+    if(send.disabled)
+        return;
+
 
     addMessage(
         text,
         "user"
     );
 
-    input.value="";
 
-    input.style.height="auto";
+    input.value = "";
+
+    input.style.height =
+        "auto";
+
+
+    send.disabled =
+        true;
+
 
     showTyping();
 
-    setTimeout(()=>{
+
+    try{
+
+        const answer =
+            await askSithra(text);
+
 
         const typing =
-            document.getElementById("typing");
+            document.getElementById(
+                "typingMessage"
+            );
+
 
         if(typing)
             typing.remove();
 
-        const response =
-            getAIResponse(text);
 
         addMessage(
-            response,
+            answer,
             "ai"
         );
 
-    },700 + Math.random()*900);
+    }
+
+
+    catch(error){
+
+        const typing =
+            document.getElementById(
+                "typingMessage"
+            );
+
+
+        if(typing)
+            typing.remove();
+
+
+        addMessage(
+
+            "Sithra bağlantısında hata oluştu.\n\n" +
+            error.message,
+
+            "ai"
+
+        );
+
+
+        console.error(error);
+
+    }
+
+
+    finally{
+
+        send.disabled =
+            false;
+
+        input.focus();
+
+    }
 
 }
 
 
-/* =========================
+/* ==================================================
    KOPYALA
-========================= */
+================================================== */
 
-function copyText(button){
+async function copyMessage(button){
 
     const text =
         button
         .parentElement
-        .querySelector(".message-text")
+        .querySelector(
+            ".message-text"
+        )
         .innerText;
 
-    navigator.clipboard.writeText(text);
 
-    button.innerText =
-        "Kopyalandı ✓";
+    try{
 
-    setTimeout(()=>{
+        await navigator.clipboard
+            .writeText(text);
+
 
         button.innerText =
-            "Kopyala";
+            "Kopyalandı ✓";
 
-    },1500);
+
+        setTimeout(()=>{
+
+            button.innerText =
+                "Kopyala";
+
+        },1500);
+
+    }
+
+    catch{
+
+        button.innerText =
+            "Kopyalanamadı";
+
+    }
 
 }
 
 
-/* =========================
+/* ==================================================
    YENİ SOHBET
-========================= */
+================================================== */
 
 function newChat(){
 
-    messages.innerHTML = `
+    messages.innerHTML = "";
 
-        <div class="message ai">
 
-            <div class="avatar">
-                ✦
-            </div>
+    addMessage(
 
-            <div class="message-content">
+        `Merhaba. Ben Sithra AI.
 
-                <div class="message-name">
-                    NEXUS
-                </div>
+Kodlama, teknoloji, GTA World,
+fikir üretme, yazı yazma ve
+genel konularda sana yardımcı
+olabilirim.
 
-                <div class="message-text">
-Yeni sohbet başlatıldı.
+Ne yapmak istiyorsun?`,
 
-Ben hazırım. Ne hakkında konuşmak istiyorsun?
-                </div>
+        "ai"
 
-            </div>
-
-        </div>
-
-    `;
+    );
 
 }
 
 
-/* =========================
-   TEXTAREA OTOMATİK BOY
-========================= */
+/* ==================================================
+   ENTER
+================================================== */
+
+input.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" &&
+            !event.shiftKey
+        ){
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   TEXTAREA BOYUTU
+================================================== */
 
 input.addEventListener(
     "input",
@@ -1196,14 +1404,22 @@ input.addEventListener(
         this.style.height =
             "auto";
 
+
         this.style.height =
             Math.min(
                 this.scrollHeight,
-                130
+                140
             ) + "px";
 
     }
 );
+
+
+/* ==================================================
+   BAŞLANGIÇ
+================================================== */
+
+newChat();
 
 </script>
 
