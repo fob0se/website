@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -19,11 +19,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Groq API (OpenAI SDK Uyumlu)
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: "https://api.groq.com/openai/v1"
-});
+// Google Gemini İstemcisi
+const ai = new GoogleGenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Ana Sayfa Yönlendirmesi
 app.get("/", (req, res) => {
@@ -41,12 +38,11 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    const completion = await client.chat.completions.create({
-      model: "llama-3.1-8b-instant",
-      messages: [
-        {
-          role: "system",
-          content: `
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: message,
+      config: {
+        systemInstruction: `
 Sen Sithra AI'sın.
 Türkçe konuş.
 Kendini Sithra AI olarak tanıt.
@@ -54,22 +50,15 @@ Cevapların doğal, akıcı, modern ve yardımcı olsun.
 Gereksiz yere çok uzun cevap verme.
 Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap ver.
 `
-        },
-        {
-          role: "user",
-          content: message
-        }
-      ]
+      }
     });
 
-    const reply = completion.choices[0]?.message?.content;
-
     res.json({
-      reply: reply || "Cevap üretilemedi."
+      reply: response.text || "Cevap üretilemedi."
     });
 
   } catch (error) {
-    console.error("Groq API Error:", error);
+    console.error("Gemini API Error:", error);
 
     res.status(500).json({
       error: "Sithra AI bağlantısında hata oluştu: " + (error.message || "Bilinmeyen hata")
