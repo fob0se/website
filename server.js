@@ -9,6 +9,7 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// CORS Yapılandırması
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "OPTIONS"],
@@ -18,16 +19,18 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Groq API OpenAI SDK'sı ile tam uyumludur
+// Groq API (OpenAI SDK Uyumlu)
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   baseURL: "https://api.groq.com/openai/v1"
 });
 
+// Ana Sayfa Yönlendirmesi
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// AI Chat Endpoint
 app.post("/api/chat", async (req, res) => {
   try {
     const message = req.body?.message;
@@ -39,7 +42,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const completion = await client.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "llama-3.1-70b-versatile",
       messages: [
         {
           role: "system",
@@ -74,6 +77,7 @@ Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap v
   }
 });
 
+// Lokal Çalıştırma Desteği
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
@@ -81,4 +85,5 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
+// Vercel Serverless Export
 export default app;
