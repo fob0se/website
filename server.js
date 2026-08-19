@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 
-// index.html'i yayınla
+// Statik dosyaları sun
 app.use(express.static(__dirname));
 
 const client = new OpenAI({
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// AI
+// AI Chat Endpoint
 app.post("/api/chat", async (req, res) => {
   try {
     const message = req.body?.message;
@@ -35,10 +35,12 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    const response = await client.responses.create({
-      model: process.env.OPENAI_MODEL || "gpt-5.6-luna",
-
-      instructions: `
+    const completion = await client.chat.completions.create({
+      model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `
 Sen Sithra AI'sın.
 
 Türkçe konuş.
@@ -52,26 +54,37 @@ Kullanıcı sana normal şekilde soru sorabilir.
 Gereksiz yere çok uzun cevap verme.
 
 Kullanıcı kodlama hakkında soru sorarsa anlaşılır ve uygulanabilir cevap ver.
-`,
-
-      input: message
+`
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ]
     });
 
+    const reply = completion.choices[0]?.message?.content;
+
     res.json({
-      reply: response.output_text
+      reply: reply || "Cevap üretilemedi."
     });
 
   } catch (error) {
     console.error("OpenAI Error:", error);
 
     res.status(500).json({
-      error: "Sithra AI bağlantısında hata oluştu."
+      error: "Sithra AI bağlantısında hata oluştu: " + (error.message || "Bilinmeyen hata")
     });
   }
 });
 
-const PORT = process.env.PORT || 3000;
+// Lokal çalıştırma desteği
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Sithra AI backend ${PORT} portunda çalışıyor.`);
+  });
+}
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Sithra AI backend ${PORT} portunda çalışıyor.`);
-});
+// Vercel Serverless Deployment için zorunlu export
+export default app;
