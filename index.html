@@ -882,22 +882,10 @@ textarea::placeholder{
 <script>
 
 /* ==================================================
-   API AYARI
+   BACKEND URL AYARI
 ================================================== */
 
-/*
-   BURAYA YENİ API KEY'İNİ YAZ.
-
-   ÖRNEK:
-
-   const API_KEY = "sk-proj-xxxxxxxx";
-
-   DİKKAT:
-   BU YÖNTEM API KEY'İ TARAYICIDA GÖRÜNÜR YAPAR.
-*/
-
-const API_KEY =
-"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";
+const BACKEND_URL = "https://website-lyart-six-47.vercel.app/api/chat";
 
 
 /* ==================================================
@@ -1060,93 +1048,24 @@ function showTyping(){
 
 
 /* ==================================================
-   OPENAI
+   BACKEND İSTEĞİ
 ================================================== */
 
 async function askSithra(userMessage){
 
-    if(
-        !API_KEY ||
-        API_KEY ===
-        "BURAYA_YENI_API_KEYINI_YAZ"
-    ){
-
-        throw new Error(
-            "API anahtarını kodun içindeki API_KEY alanına ekle."
-        );
-
-    }
-
-
     const response =
         await fetch(
-            "https://api.openai.com/v1/responses",
+            BACKEND_URL,
             {
 
                 method:"POST",
 
-
                 headers:{
-
-                    "Content-Type":
-                        "application/json",
-
-                    "Authorization":
-                        "Bearer " + API_KEY
-
+                    "Content-Type": "application/json"
                 },
 
-
                 body:JSON.stringify({
-
-                    model:
-                        "gpt-5.6-luna",
-
-
-                    instructions:`
-
-Sen SITHRA AI'sın.
-
-Kullanıcıyla Türkçe konuş.
-
-Kendini ChatGPT veya OpenAI
-olarak tanıtma.
-
-Kendini SITHRA AI olarak tanıt.
-
-Tarzın:
-
-- modern
-- zeki
-- sakin
-- özgüvenli
-- hafif gizemli
-- yardımsever
-
-Kodlama sorularında çalışır
-kod örnekleri ver.
-
-HTML, CSS, JavaScript,
-Python, C++, C#, Java,
-PHP, SQL ve TypeScript
-konularında yardımcı ol.
-
-GTA World hakkında soru
-sorulursa yardımcı ol.
-
-Bilmediğin bilgileri
-uydurma.
-
-Cevapları gereksiz yere
-uzatma ama gerektiğinde
-detaylandır.
-
-`,
-
-
-                    input:
-                        userMessage
-
+                    message: userMessage
                 })
 
             });
@@ -1164,6 +1083,7 @@ detaylandır.
 
             errorText =
                 errorJSON?.error?.message ||
+                errorJSON?.error ||
                 errorText;
 
         }
@@ -1174,7 +1094,7 @@ detaylandır.
 
 
         throw new Error(
-            "OpenAI API Hatası: " +
+            "Backend Hatası: " +
             errorText
         );
 
@@ -1185,7 +1105,7 @@ detaylandır.
         await response.json();
 
 
-    if(!data.output_text){
+    if(!data.reply && !data.output_text){
 
         throw new Error(
             "Sithra cevap üretemedi."
@@ -1194,7 +1114,7 @@ detaylandır.
     }
 
 
-    return data.output_text;
+    return data.reply || data.output_text;
 
 }
 
