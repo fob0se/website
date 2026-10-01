@@ -1,1 +1,199 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rina URL Converter</title>
+  <meta name="description" content="Rina Roleplay temalı URL dönüştürücü">
+  <style>
+    :root{
+      --bg:#080808;
+      --panel:#111111;
+      --panel-2:#171717;
+      --line:#2b2b2b;
+      --text:#f2f2f2;
+      --muted:#9b9b9b;
+      --white:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 50% -10%, #202020 0, transparent 36%),
+        linear-gradient(180deg,#090909 0%,#050505 100%);
+    }
+    .wrap{width:min(860px,92vw);margin:0 auto;padding:28px 0 54px}
+    .top{
+      display:flex;align-items:center;justify-content:space-between;
+      border-bottom:1px solid var(--line);padding:0 0 18px;margin-bottom:34px
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{
+      width:38px;height:38px;border:1px solid #444;border-radius:10px;
+      display:grid;place-items:center;background:#0c0c0c;font-weight:900
+    }
+    .brand-title{font-size:17px;font-weight:800;letter-spacing:.4px}
+    .brand-sub{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:1.2px;text-transform:uppercase}
+    .badge{font-size:11px;color:#cfcfcf;border:1px solid var(--line);padding:7px 10px;border-radius:999px}
+    .hero{text-align:center;margin-bottom:26px}
+    .kicker{font-size:12px;color:#bcbcbc;letter-spacing:3px;text-transform:uppercase}
+    h1{font-size:clamp(34px,6vw,62px);line-height:1;margin:11px 0 14px;font-weight:900;letter-spacing:-2.5px}
+    .hero p{max-width:650px;margin:0 auto;color:var(--muted);line-height:1.65;font-size:14px}
+    .card{
+      background:rgba(17,17,17,.92);border:1px solid var(--line);
+      border-radius:18px;padding:20px;box-shadow:0 16px 60px rgba(0,0,0,.35)
+    }
+    label{display:block;font-size:12px;font-weight:800;letter-spacing:.7px;margin:3px 0 9px;color:#dedede}
+    .row{display:flex;gap:10px}
+    input{
+      width:100%;height:52px;border-radius:12px;border:1px solid #303030;
+      background:#0a0a0a;color:var(--text);padding:0 15px;outline:none;font-size:14px
+    }
+    input:focus{border-color:#717171;box-shadow:0 0 0 3px rgba(255,255,255,.05)}
+    button{
+      height:52px;border:0;border-radius:12px;padding:0 20px;cursor:pointer;
+      background:#fff;color:#000;font-weight:900;font-size:13px;white-space:nowrap
+    }
+    button:hover{background:#e8e8e8}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .result{display:none;margin-top:16px;border-top:1px solid var(--line);padding-top:16px}
+    .result.show{display:block}
+    .result-title{font-size:12px;font-weight:800;color:#ddd;margin-bottom:9px}
+    .result-row{display:flex;gap:9px}
+    .copy{background:#1b1b1b;color:#fff;border:1px solid #343434}
+    .copy:hover{background:#242424}
+    .msg{min-height:18px;font-size:12px;margin-top:10px;color:var(--muted)}
+    .info{
+      margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px
+    }
+    .info div{border:1px solid var(--line);border-radius:12px;padding:12px;background:#0b0b0b}
+    .info b{display:block;font-size:12px;margin-bottom:4px}
+    .info span{font-size:11px;color:var(--muted);line-height:1.5}
+    .footer{margin-top:22px;text-align:center;color:#707070;font-size:11px}
+    @media(max-width:640px){
+      .row,.result-row{flex-direction:column}
+      button{width:100%}
+      .info{grid-template-columns:1fr}
+      .badge{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="brand-mark">R</div>
+        <div>
+          <div class="brand-title">Rina URL Converter</div>
+          <div class="brand-sub">Roleplay Link Utility</div>
+        </div>
+      </div>
+      <div class="badge">FAN-MADE / UNOFFICIAL</div>
+    </header>
+
+    <section class="hero">
+      <div class="kicker">URL DÖNÜŞTÜRÜCÜ</div>
+      <h1>Linkini dönüştür.</h1>
+      <p>Uzun bağlantını bu site üzerinden oyun içinde kullanabileceğin yönlendirme bağlantısına çevir.</p>
+    </section>
+
+    <main class="card">
+      <label for="url">HEDEF URL</label>
+      <div class="row">
+        <input id="url" type="url" inputmode="url" autocomplete="off"
+               placeholder="https://ornek.com/uzun-link..." />
+        <button id="convert">DÖNÜŞTÜR</button>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-title">OLUŞAN BAĞLANTI</div>
+        <div class="result-row">
+          <input id="output" readonly>
+          <button class="copy" id="copy">KOPYALA</button>
+        </div>
+        <div class="msg" id="msg"></div>
+      </div>
+
+      <div class="info">
+        <div><b>HTTPS</b><span>Yalnızca http:// ve https:// bağlantıları kabul edilir.</span></div>
+        <div><b>YÖNLENDİRME</b><span>Oluşturulan bağlantı hedef adrese 302 yönlendirmesi yapar.</span></div>
+        <div><b>OYUN KULLANIMI</b><span>Çıkan adresi kopyalayıp destekleyen oyun alanlarında kullanabilirsin.</span></div>
+      </div>
+    </main>
+
+    <div class="footer">Rina Roleplay ile resmi bir bağlantısı olmayan topluluk yapımı araç.</div>
+  </div>
+
+  <script>
+    const urlInput = document.getElementById('url');
+    const convertBtn = document.getElementById('convert');
+    const result = document.getElementById('result');
+    const output = document.getElementById('output');
+    const copyBtn = document.getElementById('copy');
+    const msg = document.getElementById('msg');
+
+    function showMessage(text) {
+      msg.textContent = text;
+    }
+
+    convertBtn.addEventListener('click', async () => {
+      const url = urlInput.value.trim();
+      result.classList.remove('show');
+      showMessage('');
+
+      if (!url) {
+        result.classList.add('show');
+        showMessage('Bir URL gir.');
+        return;
+      }
+
+      convertBtn.disabled = true;
+      convertBtn.textContent = 'HAZIRLANIYOR...';
+
+      try {
+        const res = await fetch('/api/convert', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({url})
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || 'Dönüştürme başarısız.');
+        }
+
+        output.value = data.url;
+        result.classList.add('show');
+        showMessage('Bağlantı hazır.');
+      } catch (err) {
+        result.classList.add('show');
+        showMessage(err.message || 'Bir hata oluştu.');
+      } finally {
+        convertBtn.disabled = false;
+        convertBtn.textContent = 'DÖNÜŞTÜR';
+      }
+    });
+
+    urlInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') convertBtn.click();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!output.value) return;
+      try {
+        await navigator.clipboard.writeText(output.value);
+        showMessage('Bağlantı panoya kopyalandı.');
+      } catch {
+        output.select();
+        document.execCommand('copy');
+        showMessage('Bağlantı kopyalandı.');
+      }
+    });
+  </script>
+</body>
+</html>
 
